@@ -2,9 +2,9 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 
-SRCS = main.c argument_check.c 
+SRCS = main.c argument_check.c utils.c
 
 OBJS = $(SRCS:.c=.o)
 
