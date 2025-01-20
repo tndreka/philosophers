@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tndreka <tndreka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 01:36:49 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/15 19:03:39 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/20 18:11:48 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_isdigit(char n)
+int	ft_isdigit(char n)
 {
-    if (n >= '0' && n <= '9')
-        return (1);
-    return (0);
+	if (n >= '0' && n <= '9')
+		return (1);
+	return (0);
 }
 
 int	ft_atoi(const char *str)
@@ -46,22 +46,22 @@ int	ft_atoi(const char *str)
 	return (res * sign);
 }
 
-int analyze_args(int ac, char **av)
+int	analyze_args(int ac, char **av)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 1;
-    while (i < ac)
-    {
-        j = 0;
-        while (av[i][j])
-        {
-            if (!ft_isdigit(av[i][j]))
-                return (0);
-            j++;
-        }
-        i++;
-    }
-    return (1);
+	i = 1;
+	while (i < ac)
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if (!ft_isdigit(av[i][j]))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }

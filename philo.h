@@ -3,38 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tndreka <tndreka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/15 19:01:57 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/20 18:10:25 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
+# include <pthread.h> // threads liberary 
+# include <stdio.h> // printf 
+# include <stdlib.h> // malloc & free
+# include <unistd.h> // write & sleep
+# include <stdbool.h>
+# include <sys/time.h> // gettime
+# include <limits.h> 
 
 // Struct for the philosophers
-
-
-typedef struct s_dinin
+typedef struct s_philo
 {
-    int                 index;
-    int                 time_to_die;
-    int                 time_to_eat;
-    int                 time_to_sleep;
-} t_dining;
+	int					index;
+	pthread_t			thread;
+	pthread_mutex_t		fork;
+}	t_philo;
+
+//General Struct
+typedef struct s_dining
+{
+	int					philo_nbr; // number of philo
+	int					time_to_eat; // time to eat
+	int					time_to_die; // time to die
+	int					time_to_sleep; // time to sleep 
+	int					meal_flag;// [if the optional input is there]
+	int					start_time; // the time cap when the routine has started
+	bool				finish_routine;//when 1philo is-.-||all the philos,eated
+}	t_dining;
 
 //Argument check functions
-int arg_checker(int ac, char **av);
-int analyze_args(int ac, char **av);
+int		arg_checker(int ac, char **av);
+int		analyze_args(int ac, char **av);
+
 //Utils functions
-int fT_isdigit(char n);
-int	ft_atoi(const char *str);
+int		ft_isdigit(char n);
+int		ft_atoi(const char *str);
 
 #endif
