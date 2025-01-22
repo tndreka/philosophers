@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 01:36:49 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/20 18:11:48 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/22 13:48:15 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,15 @@ int	analyze_args(int ac, char **av)
 		i++;
 	}
 	return (1);
+}
+
+void	ft_puterr(char *s, int fd)
+{
+	if (! (*s))
+		return ;
+	while (*s)
+	{
+		write(fd, s, STDERR_FILENO);
+		s++;
+	}
 }

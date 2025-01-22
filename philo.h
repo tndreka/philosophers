@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/20 18:10:25 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/22 13:48:32 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int		analyze_args(int ac, char **av);
 //Utils functions
 int		ft_isdigit(char n);
 int		ft_atoi(const char *str);
+void	ft_puterr(char *s, int fd);
 
 #endif
