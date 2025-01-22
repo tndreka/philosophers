@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/22 13:48:32 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/22 17:23:36 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 // Struct for the philosophers
 typedef struct s_philo
 {
-	int					index;
+	int					id;
+	int					last_meal;
 	pthread_t			thread;
-	pthread_mutex_t		fork;
+	pthread_mutex_t		left_fork;
+	pthread_mutex_t		right_fork;
 }	t_philo;
 
 //General Struct
@@ -39,6 +41,7 @@ typedef struct s_dining
 	int					meal_flag;// [if the optional input is there]
 	int					start_time; // the time cap when the routine has started
 	bool				finish_routine;//when 1philo is-.-||all the philos,eated
+	t_philo				*philos;
 }	t_dining;
 
 //Argument check functions
