@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
+/*   By: tndreka <tndreka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/22 17:23:36 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/23 14:27:45 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 typedef struct s_philo
 {
 	int					id;
+	int 				meal_count;
 	int					last_meal;
 	pthread_t			thread;
 	pthread_mutex_t		left_fork;
@@ -39,14 +40,17 @@ typedef struct s_dining
 	int					time_to_die; // time to die
 	int					time_to_sleep; // time to sleep 
 	int					meal_flag;// [if the optional input is there]
-	int					start_time; // the time cap when the routine has started
+	int					start_time; // the time cap when the routine has started 
 	bool				finish_routine;//when 1philo is-.-||all the philos,eated
 	t_philo				*philos;
 }	t_dining;
 
 //Argument check functions
-int		arg_checker(int ac, char **av);
+int		arg_checker(int argc, char *argv[]);
 int		analyze_args(int ac, char **av);
+int		philo_checker(int argc, char *argv[]);
+
+//Initialization functions
 
 //Utils functions
 int		ft_isdigit(char n);
