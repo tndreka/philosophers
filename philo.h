@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tndreka <tndreka@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/23 14:27:45 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/23 19:03:27 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 typedef struct s_philo
 {
 	int					id;
-	int 				meal_count;
+	int					meal_count;
 	int					last_meal;
 	pthread_t			thread;
 	pthread_mutex_t		left_fork;
@@ -51,6 +51,7 @@ int		analyze_args(int ac, char **av);
 int		philo_checker(int argc, char *argv[]);
 
 //Initialization functions
+void	initialization(t_dining *dining, int argc, char *argv[]);
 
 //Utils functions
 int		ft_isdigit(char n);
