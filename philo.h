@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/23 19:03:27 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/25 15:30:52 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@
 # include <sys/time.h> // gettime
 # include <limits.h> 
 
+// Struct for type of Codes that will be in this program
+typedef enum type_code
+{
+	MALLOC,
+	THREAD_CREATE,
+	THREAD_EXIT,
+	THREAD_JOIN,
+	MUTEX_INIT,
+	MUTEX_DESTROY,
+	MUTEX_LOCK,
+	MUTEX_UNLOCK
+}			t_code;
 // Struct for the philosophers
 typedef struct s_philo
 {

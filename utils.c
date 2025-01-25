@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 01:36:49 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/23 17:05:57 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/25 15:45:03 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,6 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res * sign);
-}
-
-int	analyze_args(int ac, char **av)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < ac)
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (!ft_isdigit(av[i][j]))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
 }
 
 void	ft_puterr(char *s, int fd)

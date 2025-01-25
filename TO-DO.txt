@@ -1,0 +1,4 @@
+==> threads per philo
+     make a safe function for threds that will error in case of error
+	each philo from the argument line should be created as threads
+

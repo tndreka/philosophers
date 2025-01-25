@@ -6,12 +6,17 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:31:18 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/23 17:19:50 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:56:01 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
+/*					ANALYZE THE ARGUMENT
+	This are the function that i created to check the input from the CLI.
+	1==> I check if the input is an actual numbrt
+	2==> I check if the timestamps are bigger than 60
+	3==> I check if we have at least one philosopher 
+*/
 int	arg_checker(int argc, char *argv[])
 {
 	if (argc == 5 || argc == 6)
@@ -36,5 +41,25 @@ int	philo_checker(int argc, char *argv[])
 		ft_puterr("Error: Time to eat, time to die and time to sleep should be at least 60\n", 2);
 	if (argc == 6 && ft_atoi(argv[5]) < 1)
 		ft_puterr("Error: Number of meals should be at least 1\n", 2);
+	return (1);
+}
+
+int	analyze_args(int ac, char **av)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < ac)
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if (!ft_isdigit(av[i][j]))
+				return (0);
+			j++;
+		}
+		i++;
+	}
 	return (1);
 }

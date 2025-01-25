@@ -6,12 +6,17 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/23 19:05:59 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/25 15:16:05 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
+/*
+				INITIALIZATION
+	On this file we are feeding the struct with all the nescesary data that 
+	we need for our program to start.
+	
+*/
 void	initialization(t_dining *dining, int argc, char *argv[])
 {
 	dining->philo_nbr = ft_atoi(argv[1]);
@@ -26,6 +31,11 @@ void	initialization(t_dining *dining, int argc, char *argv[])
 
 void data_assign(t_dining *dining)
 {
+	int		i;
+
+	i = 0;
 	dining->finish_routine = false;
-	
+	dining->philos = malloc(sizeof(t_philo) * dining->philo_nbr);
+	if (!dining->philos)
+		ft_puterr("Error: Malloc failed to allocate memory for philos !!data_assign!!");
 }
