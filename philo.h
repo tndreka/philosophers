@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/25 15:30:52 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/26 18:16:06 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,22 @@ typedef enum type_code
 	MUTEX_UNLOCK
 }			t_code;
 // Struct for the philosophers
+
+typedef struct e_secure
+{
+	size_t		bytes;
+	void		*data1;
+	void		*data2;
+	t_code		code;	
+}		t_secure;
 typedef struct s_philo
 {
+	pthread_t			thread;
 	int					id;
 	int					meal_count;
 	int					last_meal;
-	pthread_t			thread;
-	pthread_mutex_t		left_fork;
-	pthread_mutex_t		right_fork;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
 }	t_philo;
 
 //General Struct
@@ -56,6 +64,7 @@ typedef struct s_dining
 	bool				finish_routine;//when 1philo is-.-||all the philos,eated
 	t_philo				*philos;
 }	t_dining;
+
 
 //Argument check functions
 int		arg_checker(int argc, char *argv[]);
