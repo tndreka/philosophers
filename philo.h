@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/27 17:23:33 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/27 18:36:26 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,15 @@ int		philo_checker(int argc, char *argv[]);
 //Initialization functions
 void	initialization(t_dining *dining, int argc, char *argv[]);
 
-//Utils functions
+//Utils-1 functions
 int		ft_isdigit(char n);
 int		ft_atoi(const char *str);
 void	ft_puterr(char *s, int fd);
+
+//Utils-2
+void	*alloc_malloc(size_t byte);
+int		secure_function(t_secure *data);
+int		secure_thread(t_secure *data);
+int		secure_mutex(t_secure *data);
 
 #endif

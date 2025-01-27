@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 15:18:32 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/27 17:32:14 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/27 18:44:25 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int		secure_function(t_secure *data)
 	res = 0;
 	if (data->code == THREAD_CREATE || data->code == THREAD_EXIT || data->code == THREAD_JOIN)
 	{
-		if (secure_thread((t_philo *)data->data1, data) == 0) // to do
+		if (secure_thread((data) == 0) // to do
 			return(res);
 		else
 			ft_puterr("Error: Thread_secure function failed", 2);
 	}
 	else if (data->code == MUTEX_INIT || data->code == MUTEX_DESTROY || data->code == MUTEX_LOCK || data->code == MUTEX_UNLOCK)
 	{
-		if (secure_mutex((t_dining *)data->data1, data) == 0) // to do 
+		if (secure_mutex(data) == 0) // to do 
 			return(res);
 		else
 			ft_puterr("Error: secure_mutex function failed", 2);
@@ -54,16 +54,17 @@ int		secure_function(t_secure *data)
 	return (res);	
 }
 
-/* MUTEX 
-	INIT, DESTROY, LOCK, UNLOCK*/
+/* 
+============= THREAD CREATE, THREAD_JOIN, THREAD_EXIT ==============
+*/
 
-int		secure_thread(t_philo *philo, t_secure *data)
+int		secure_thread(t_secure *data)
 {
 	int res;
 	
 	if (data->code == THREAD_CREATE)
 	{
-		res = pthread_create(&philo->thread, NULL,(void*(*)(void*))data->data2, data->data3);
+		res = pthread_create((pthread_t *)data->data1, NULL,(void*(*)(void*))data->data2, data->data3);
 		if (0 != res)
 		{
 			ft_puterr("Error : pthread_create failed", 2);
@@ -72,7 +73,7 @@ int		secure_thread(t_philo *philo, t_secure *data)
 	}
 	else if (data->code == THREAD_JOIN)
 	{
-		res = pthread_join(philo->thread, (void **)data->data2);
+		res = pthread_join((pthread_t *)data->data1, (void **)data->data2);
 		if (0 != res)
 		{
 			ft_puterr("Error: pthread_join failed", 2);
@@ -81,5 +82,25 @@ int		secure_thread(t_philo *philo, t_secure *data)
 	}
 	else if (data->code == THREAD_EXIT)
 		pthread_exit(data->data1);
+	return(EXIT_SUCCESS);
+}
+
+/*
+        MUTEX
+INIT, DESTROY, LOCK , UNLOCK
+*/
+
+int		secure_mutex(t_secure *data)
+{
+	int res;
+
+	if (data->code == MUTEX_INIT)
+		res = pthread_mutex_init((pthread_mutex_t *)data->data1, NULL);
+	else if (data->code == MUTEX_DESTROY)
+		res = pthread_mutex_destroy((pthread_mutex_t *)data->data1);
+	else if (data->code == MUTEX_LOCK)
+		res = pthread_mutex_lock((pthread_mutex_t *)data->data1);
+	else if (data->code == MUTEX_UNLOCK)
+		res = pthread_mutex_unlock((pthread_mutex_t *)data->data1);
 	return(EXIT_SUCCESS);
 }
