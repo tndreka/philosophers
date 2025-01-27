@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/25 15:16:05 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/27 19:03:50 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	initialization(t_dining *dining, int argc, char *argv[])
 
 void data_assign(t_dining *dining)
 {
-	int		i;
+	t_secure	secure_info;  
+	int			i;
 
 	i = 0;
 	dining->finish_routine = false;
-	dining->philos = malloc(sizeof(t_philo) * dining->philo_nbr);
-	if (!dining->philos)
-		ft_puterr("Error: Malloc failed to allocate memory for philos !!data_assign!!");
+	dining->philos = (t_philo *)alloc_malloc(sizeof(t_philo) * dining->philo_nbr);
+	
 }
