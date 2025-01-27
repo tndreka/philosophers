@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/26 18:16:06 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/27 17:23:33 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ typedef enum type_code
 	MUTEX_LOCK,
 	MUTEX_UNLOCK
 }			t_code;
-// Struct for the philosophers
 
 typedef struct e_secure
 {
-	size_t		bytes;
 	void		*data1;
 	void		*data2;
+	void		*data3;
 	t_code		code;	
 }		t_secure;
+// Struct for the philosophers
 typedef struct s_philo
 {
 	pthread_t			thread;
