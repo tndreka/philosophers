@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/27 18:36:26 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/28 19:05:25 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ typedef enum type_code
 	MUTEX_UNLOCK
 }			t_code;
 
+typedef struct e_fork
+{
+	pthread_mutex_t fork;
+	int				fork_id;
+}				t_fork;
+
 typedef struct e_secure
 {
 	void		*data1;
@@ -44,12 +50,15 @@ typedef struct e_secure
 // Struct for the philosophers
 typedef struct s_philo
 {
-	pthread_t			thread;
-	int					id;
-	int					meal_count;
-	int					last_meal;
-	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		*right_fork;
+	pthread_t			thread; // each philo is a thread
+	int					id; 
+	int					meal_count; // how many meals has he eated
+	int					last_meal; // time passed since eating the last meal
+	bool				starving; // if he didnt eat 
+	bool				full;  
+	t_fork				*left_fork;
+	t_fork				*right_fork;
+	
 }	t_philo;
 
 //General Struct
@@ -62,6 +71,7 @@ typedef struct s_dining
 	int					meal_flag;// [if the optional input is there]
 	int					start_time; // the time cap when the routine has started 
 	bool				finish_routine;//when 1philo is-.-||all the philos,eated
+	t_fork				*forks;
 	t_philo				*philos;
 }	t_dining;
 

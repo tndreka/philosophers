@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/27 19:03:50 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/28 19:18:15 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,19 @@ void	initialization(t_dining *dining, int argc, char *argv[])
 	else
 		dining->meal_flag = ft_atoi(argv[5]);
 }
-
+/ *here we assign the 
+*/
 void data_assign(t_dining *dining)
 {
 	t_secure	secure_info;  
 	int			i;
 
 	i = 0;
-	dining->finish_routine = false;
+	dining->finish_routine = false;/
 	dining->philos = (t_philo *)alloc_malloc(sizeof(t_philo) * dining->philo_nbr);
+	while (i < dining->philo_nbr)
+	{
+			
+	}
 	
 }
