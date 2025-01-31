@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/28 19:18:15 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/29 11:56:28 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,40 @@ void	initialization(t_dining *dining, int argc, char *argv[])
 	else
 		dining->meal_flag = ft_atoi(argv[5]);
 }
-/ *here we assign the 
+/*
+	here we assign the 
 */
 void data_assign(t_dining *dining)
 {
-	t_secure	secure_info;  
+	t_secure	data;
 	int			i;
 
 	i = 0;
-	dining->finish_routine = false;/
+	dining->finish_routine = false;
 	dining->philos = (t_philo *)alloc_malloc(sizeof(t_philo) * dining->philo_nbr);
+	dining->forks = (t_fork *)alloc_malloc(sizeof(t_fork) * dining->philo_nbr);
 	while (i < dining->philo_nbr)
 	{
-			
+		data.data1 = &dining->forks[i].fork;
+		data.code = MUTEX_INIT;
+		secure_function(&data);
+		i++;
+	}	
+}
+void create_philos(t_dining *dining)
+{
+	t_philo		*philo;
+	int			i;
+
+	i = 0;
+	while (i < dining->philo_nbr)
+	{
+		philo = &dining->philos[i];
+		philo->full = false;
+		philo->meal_count = 0;
+		philo->dining = dining;
+		
+		i++;
 	}
 	
 }
