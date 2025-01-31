@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/28 19:05:25 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:04:23 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_philo
 	bool				full;  
 	t_fork				*left_fork;
 	t_fork				*right_fork;
-	
+	t_dining			*dining;
 }	t_philo;
 
 //General Struct
@@ -82,7 +82,7 @@ int		analyze_args(int ac, char **av);
 int		philo_checker(int argc, char *argv[]);
 
 //Initialization functions
-void	initialization(t_dining *dining, int argc, char *argv[]);
+void	initialization_of_struct(t_dining *dining, int argc, char *argv[]);
 
 //Utils-1 functions
 int		ft_isdigit(char n);

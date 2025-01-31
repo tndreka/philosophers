@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 15:18:32 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/27 18:52:49 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:40:27 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		secure_function(t_secure *data)
 	res = 0;
 	if (data->code == THREAD_CREATE || data->code == THREAD_EXIT || data->code == THREAD_JOIN)
 	{
-		if (secure_thread((data) == 0) // to do
+		if (secure_thread(data) == 0) // to do
 			return(res);
 		else
 			ft_puterr("Error: Thread_secure function failed", 2);
@@ -94,6 +94,11 @@ int		secure_mutex(t_secure *data)
 {
 	int res;
 
+	if (res != 0 )
+	{
+		ft_puterr("Error in MUTEX", 2);
+		return (EXIT_FAILURE);
+	}
 	if (data->code == MUTEX_INIT)
 		res = pthread_mutex_init((pthread_mutex_t *)data->data1, NULL);
 	else if (data->code == MUTEX_DESTROY)

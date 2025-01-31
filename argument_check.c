@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:31:18 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/29 11:54:00 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:32:31 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	philo_checker(int argc, char *argv[])
 		ft_puterr("Error: Time to eat, time to die and time to sleep should be at least 60\n", 2);
 	if (argc == 6 && ft_atoi(argv[5]) < 1)
 		ft_puterr("Error: Number of meals should be at least 1\n", 2);
-	return (1);
+	return (0);
 }
 
 int	analyze_args(int ac, char **av)
