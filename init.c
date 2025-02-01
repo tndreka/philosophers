@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/31 18:21:12 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/01 16:08:41 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,11 @@ void	create_philo(t_dining *dining)
 		philo->meal_count = 0;
 		philo->full = false;
 		philo->dining = dining;
-		forks_assign();//to do
+		forks_assign(i, philo, dining->forks);//to do
 		i++;
 	}
 	
 }
-
-
 
 /*
 	in this function i will link each fork to the philosopher.
@@ -112,5 +110,7 @@ now corresponding to this we will assign the left forks to the philos by the for
 [the position_of_philo + 1(bc is left_fork) % philo_num]
  left_fork = (4 + 1) % 5(if we have 5 filos)
  		   =    5  %  5
-reminder   =  0. => so the 5th philosopher if he will eat will get the fork with 0 num assignd. 	    
+reminder   =  0. => so the 5th philosopher if he will eat will get the fork with 0 num assignd.
 */
+
+void	forks_assign(int i, t_philo *philo, )
