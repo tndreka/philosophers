@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/01 19:16:04 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/01 19:39:26 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <limits.h> 
 
 //Defination of the Main struct
-typedef struct s_dining t_dining;
+typedef struct s_dining	t_dining;
 
 // Struct for type of Codes that will be in this program
 typedef enum type_code
@@ -39,7 +39,7 @@ typedef enum type_code
 
 typedef struct e_fork
 {
-	pthread_mutex_t fork;
+	pthread_mutex_t	fork;
 	int				fork_id;
 }				t_fork;
 
@@ -54,11 +54,11 @@ typedef struct e_secure
 typedef struct s_philo
 {
 	pthread_t			thread; // each philo is a thread
-	int					index; 
+	int					index;
 	int					meal_count; // how many meals has he eated
 	int					last_meal; // time passed since eating the last meal
 	bool				starving; // if he didnt eat 
-	bool				full;  
+	bool				full;
 	t_fork				*left_fork;
 	t_fork				*right_fork;
 	t_dining			*dining;
@@ -72,12 +72,11 @@ typedef struct s_dining
 	int					time_to_die; // time to die
 	int					time_to_sleep; // time to sleep 
 	int					meal_flag;// [if the optional input is there]
-	int					start_time; // the time cap when the routine has started 
+	int					start_time; // the time cap when the routine has started
 	bool				finish_routine;//when 1philo is-.-||all the philos,eated
 	t_fork				*forks;
 	t_philo				*philos;
 }	t_dining;
-
 
 //Argument check functions
 int		arg_checker(int argc, char *argv[]);
@@ -85,9 +84,9 @@ int		analyze_args(int ac, char **av);
 int		philo_checker(int argc, char *argv[]);
 
 //Initialization functions
-void	initialization_of_struct(t_dining *dining, int argc, char *argv[]);
+void	initialization_of_struct(t_dining *dining, char *argv[]);
 void	assign_data(t_dining *dining);
-void	init_forks_per_philo(t_dining *dining);
+int		init_forks_per_philo(t_dining *dining);
 void	create_philo(t_dining *dining);
 void	forks_assign(int *i, t_philo *philo, t_fork *forks);
 

@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:31:18 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/31 16:32:31 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/01 19:27:05 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	philo_checker(int argc, char *argv[])
 	if (!analyze_args(argc, argv))
 		ft_puterr("Error: Arguments should be an INT\n", 2);
 	if (ft_atoi(argv[1]) < 1 || ft_atoi(argv[1]) > 200)
-		ft_puterr("Error: Number of philosophers should be between 1 and 200\n", 2);
+		ft_puterr("Error: Number of philosophers should be between 1 \ 
+				and 200\n",2);
 	if (ft_atoi(argv[2]) < 60 || ft_atoi(argv[3]) < 60 || ft_atoi(argv[4]) < 60)
 		ft_puterr("Error: Time to eat, time to die and time to sleep should be at least 60\n", 2);
 	if (argc == 6 && ft_atoi(argv[5]) < 1)
