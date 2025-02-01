@@ -4,7 +4,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -pthread -g
 
-SRCS = main.c argument_check.c utils.c
+SRCS = main.c argument_check.c utils.c utils2.c init.c
 
 OBJS = $(SRCS:.c=.o)
 

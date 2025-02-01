@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/31 18:04:23 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/01 19:16:04 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <stdbool.h>
 # include <sys/time.h> // gettime
 # include <limits.h> 
+
+//Defination of the Main struct
+typedef struct s_dining t_dining;
 
 // Struct for type of Codes that will be in this program
 typedef enum type_code
@@ -51,7 +54,7 @@ typedef struct e_secure
 typedef struct s_philo
 {
 	pthread_t			thread; // each philo is a thread
-	int					id; 
+	int					index; 
 	int					meal_count; // how many meals has he eated
 	int					last_meal; // time passed since eating the last meal
 	bool				starving; // if he didnt eat 
@@ -83,6 +86,10 @@ int		philo_checker(int argc, char *argv[]);
 
 //Initialization functions
 void	initialization_of_struct(t_dining *dining, int argc, char *argv[]);
+void	assign_data(t_dining *dining);
+void	init_forks_per_philo(t_dining *dining);
+void	create_philo(t_dining *dining);
+void	forks_assign(int *i, t_philo *philo, t_fork *forks);
 
 //Utils-1 functions
 int		ft_isdigit(char n);

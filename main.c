@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:37 by tndreka           #+#    #+#             */
-/*   Updated: 2025/01/31 17:58:31 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/01 19:14:00 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ int	main(int argc, char **argv)
 {
 	t_dining	dining;
 
-	arg_checker(argc, argv);
+	if (arg_checker(argc, argv) != 0)
+	{
+		ft_puterr("Error :  Put the correct arguments for the philo program\n", 2);
+		return(EXIT_FAILURE);
+	}
 	initialization_of_struct(&dining, argc, argv);
 	assign_data(&dining);
-	create_philos(&dining);
-	// data_assign(&dining);
-	// create_philos(&dining);
-	return (0);
+	init_forks_per_philo(&dining);
+	create_philo(&dining);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/01 16:08:41 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/01 19:04:34 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ void	create_philo(t_dining *dining)
 	while (i < dining->philo_nbr)
 	{
 		philo = dining->philos + i;
-		philo->id = i + 1;
+		philo->index = i + 1;
 		philo->meal_count = 0;
 		philo->full = false;
 		philo->dining = dining;
-		forks_assign(i, philo, dining->forks);//to do
+		forks_assign(&i, philo, dining->forks);//to do
 		i++;
 	}
 	
@@ -111,6 +111,23 @@ now corresponding to this we will assign the left forks to the philos by the for
  left_fork = (4 + 1) % 5(if we have 5 filos)
  		   =    5  %  5
 reminder   =  0. => so the 5th philosopher if he will eat will get the fork with 0 num assignd.
+==> DEADLOCK Soulution -> to prevent this program from encountering a deadlock in the
+executing part we needed to make sure that each philosopher takes the forks in proper way;
+As we now that each philo to eat should have to forks so he would be able to eat. in this case 
+i founded the soulution of eaven and odd number of philo . depending on the number of the philosphers
+i make the assingment of the left and the right fork.
 */
 
-void	forks_assign(int i, t_philo *philo, )
+void	forks_assign(int *i, t_philo *philo, t_fork *forks)
+{
+	if ((*i) % 2)
+	{
+		philo->right_fork = &forks[(*i)];
+		philo->left_fork = &forks[(philo->dining->philo_nbr + 1) % (*i)];
+	}
+	else
+	{
+		philo->right_fork = &forks[(philo->dining->philo_nbr + 1) % (*i)];
+		philo->left_fork = &forks[(*i)];
+	}
+}
