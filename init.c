@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/01 19:29:41 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/05 18:08:10 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	init_forks_per_philo(t_dining *dining)
 		}
 		i++;
 	}
+	// printf("Fork %d initialized\n", i);
 	return (EXIT_SUCCESS);
 }
 
@@ -95,6 +96,7 @@ void	create_philo(t_dining *dining)
 		philo->full = false;
 		philo->dining = dining;
 		forks_assign(&i, philo, dining->forks);
+		// printf("Philosopher %d initialized\n", philo->index);
 		i++;
 	}
 }
