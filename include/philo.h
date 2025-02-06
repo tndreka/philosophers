@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/01 19:39:26 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:39:26 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_philo
 	pthread_t			thread; // each philo is a thread
 	int					index;
 	int					meal_count; // how many meals has he eated
-	int					last_meal; // time passed since eating the last meal
+	long					last_meal; // time passed since eating the last meal
 	bool				starving; // if he didnt eat 
 	bool				full;
 	t_fork				*left_fork;
@@ -72,7 +72,7 @@ typedef struct s_dining
 	int					time_to_die; // time to die
 	int					time_to_sleep; // time to sleep 
 	int					meal_flag;// [if the optional input is there]
-	int					start_time; // the time cap when the routine has started
+	long				start_time; // the time cap when the routine has started
 	bool				finish_routine;//when 1philo is-.-||all the philos,eated
 	t_fork				*forks;
 	t_philo				*philos;
