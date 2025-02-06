@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/06 17:44:24 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:19:42 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,40 @@
 
 void	start_dining(t_dining *dining)
 {
-	//here we start to count the tim
-	time_start();
+	//here we start to count the time
+	dining->start_time = time_start();
 	//here we initilize threads per philo[i]
-	create_threads(dining);
+	philo_thread(dining);
+	//monitoring =>to do
+	
 }
 
-long	time_start(void)
+void philo_thread(t_dining *dining)
 {
-	struct timeval	tv;
-	long			milisec;
+	t_secure	data;
+	int			i;
 
-	if (gettimeofday(&tv, NULL) == 0)
+	i = 0;
+	while (i < dining->philo_nbr)
 	{
-		milisec = (tv.tv_sec * 1000L) + (tv.tv_usec / 1000L);
-		return (milisec);
+		data.data1 = &dining->philos[i].thread;
+		data.data2 = dining_routine;
+		data.data3 = &dining->philos[i];
+		data.code = THREAD_CREATE;
+		secure_function(&data);
+		i++;
 	}
-	return (-1);
+}
+
+void	*dining_routine(void *arg)
+{
+	t_philo *philo;
+
+	philo = (t_philo *)arg;
+	while (!philo->dining->finish_routine)
+	{
+		printf("philo [%d]", philo->index);
+		usleep(100);
+	}
+	return (NULL);
 }

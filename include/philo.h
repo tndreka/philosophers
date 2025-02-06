@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/06 15:39:26 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:15:50 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,13 @@ int		secure_function(t_secure *data);
 int		secure_thread(t_secure *data);
 int		secure_mutex(t_secure *data);
 
+//Utils-3
+long	time_start(void);
+
+//Start the dining routine
+void	start_dining(t_dining *dining);
+void	philo_thread(t_dining *dining);
+
+//routine Function
+void	*dining_routine(void *arg);
 #endif
