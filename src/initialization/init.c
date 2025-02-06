@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/06 19:54:53 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:22:40 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	create_philo(t_dining *dining)
 		philo->index = i + 1;
 		philo->meal_count = 0;
 		philo->full = false;
-		philo->dining = dining;
+		philo->dining = dining; 
 		printf("Before forks_assign for philosopher %d\n", philo->index);
 		forks_assign(i, philo, dining->forks);
 		printf("Philosopher %d initialized\n", philo->index);
@@ -135,11 +135,11 @@ void	forks_assign(int i, t_philo *philo, t_fork *forks)
 	if ((i) % 2)
 	{
 		philo->right_fork = &forks[(i)];
-		philo->left_fork = &forks[(philo->dining->philo_nbr + 1) % (i)];
+		philo->left_fork = &forks[(philo->dining->philo_nbr + 1)];
 	}
 	else
 	{
-		philo->right_fork = &forks[(philo->dining->philo_nbr + 1) % (i)];
+		philo->right_fork = &forks[(philo->dining->philo_nbr + 1)];
 		philo->left_fork = &forks[(i)];
 	}
 	printf("\n");
