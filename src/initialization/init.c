@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/05 18:08:10 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:54:53 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	init_forks_per_philo(t_dining *dining)
 		}
 		i++;
 	}
-	// printf("Fork %d initialized\n", i);
-	return (EXIT_SUCCESS);
+	printf("Fork %d initialized\n", i);
+	return (0);
 }
 
 /*
@@ -84,6 +84,7 @@ int	init_forks_per_philo(t_dining *dining)
 */
 void	create_philo(t_dining *dining)
 {
+	printf("before philo");
 	t_philo	*philo;
 	int		i;
 
@@ -95,10 +96,12 @@ void	create_philo(t_dining *dining)
 		philo->meal_count = 0;
 		philo->full = false;
 		philo->dining = dining;
-		forks_assign(&i, philo, dining->forks);
-		// printf("Philosopher %d initialized\n", philo->index);
+		printf("Before forks_assign for philosopher %d\n", philo->index);
+		forks_assign(i, philo, dining->forks);
+		printf("Philosopher %d initialized\n", philo->index);
 		i++;
 	}
+	printf("After finishing the philo init\n");
 }
 
 /*
@@ -126,16 +129,19 @@ depending on the number of the philosphers
 i make the assingment of the left and the right fork.
 */
 
-void	forks_assign(int *i, t_philo *philo, t_fork *forks)
+void	forks_assign(int i, t_philo *philo, t_fork *forks)
 {
-	if ((*i) % 2)
+	printf("before->forks get_assign\n");
+	if ((i) % 2)
 	{
-		philo->right_fork = &forks[(*i)];
-		philo->left_fork = &forks[(philo->dining->philo_nbr + 1) % (*i)];
+		philo->right_fork = &forks[(i)];
+		philo->left_fork = &forks[(philo->dining->philo_nbr + 1) % (i)];
 	}
 	else
 	{
-		philo->right_fork = &forks[(philo->dining->philo_nbr + 1) % (*i)];
-		philo->left_fork = &forks[(*i)];
+		philo->right_fork = &forks[(philo->dining->philo_nbr + 1) % (i)];
+		philo->left_fork = &forks[(i)];
 	}
+	printf("\n");
+	printf("after forks get assign\n");
 }

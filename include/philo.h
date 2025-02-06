@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/06 19:15:50 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:55:11 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	initialization_of_struct(t_dining *dining, char *argv[]);
 void	assign_data(t_dining *dining);
 int		init_forks_per_philo(t_dining *dining);
 void	create_philo(t_dining *dining);
-void	forks_assign(int *i, t_philo *philo, t_fork *forks);
+void	forks_assign(int i, t_philo *philo, t_fork *forks);
 
 //Utils-1 functions
 int		ft_isdigit(char n);
