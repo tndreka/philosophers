@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/06 19:39:56 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/10 20:03:21 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	start_dining(t_dining *dining)
 {
-	printf("started diningg \n");
 	//here we start to count the time
 	dining->start_time = time_start();
 	//here we initilize threads per philo[i]
-	printf("threads_creating \n");
 	philo_thread(dining);
-	printf("creating====> check √ \n");
 	//monitoring =>to do
-	
+	//join the threads
+	//free cleanup
+	// free(dining->philos);
+	// 	free(dining->forks);	
 }
 
 void philo_thread(t_dining *dining)
@@ -39,9 +39,8 @@ void philo_thread(t_dining *dining)
 		data.data3 = &dining->philos[i];
 		data.code = THREAD_CREATE;
 		secure_function(&data);
-		printf("thread %d is created", i);
 		i++;
-	}
+	}	
 }
 
 void	*dining_routine(void *arg)
@@ -49,10 +48,19 @@ void	*dining_routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
-	while (!philo->dining->finish_routine)
+	while (1)
 	{
-		printf("philo [%d]", philo->index);
-		usleep(100);
+		if(philo->index % 2 == 0)
+		{
+			//here take the forks and mutex lock for left and right
+			//print the action
+		}
+		else
+		{
+			////here take the forks and mutex lock for left and right
+		}
+		// now i should have the print that the philo is eating keep a count at 
+		//last time that he eated and also ad the count on the meal eated 
 	}
 	return (NULL);
 }

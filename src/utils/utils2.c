@@ -6,21 +6,12 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 15:18:32 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/01 19:38:32 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/10 14:11:15 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*
-		In these utils i am creating safer fornction with returns case in 
-		case of an ERRor
-		1) Malloc
-		2) Mutex
-		3)threads
-*/
-
-/* ========= MALLOC ======== */
 void	*alloc_malloc(size_t byte)
 {
 	void	*memory;
@@ -31,7 +22,6 @@ void	*alloc_malloc(size_t byte)
 	return (memory);
 }
 
-// ============== BLUEPRINT ========== 
 int	secure_function(t_secure *data)
 {
 	int			res;
@@ -56,10 +46,6 @@ int	secure_function(t_secure *data)
 	return (res);
 }
 
-/* 
-============= THREAD CREATE, THREAD_JOIN, THREAD_EXIT ==============
-*/
-
 int	secure_thread(t_secure *data)
 {
 	int	res;
@@ -77,7 +63,7 @@ int	secure_thread(t_secure *data)
 	}
 	else if (data->code == THREAD_JOIN)
 	{
-		res = pthread_join(*(pthread_t *)data->data1, (void **)data->data2);
+		res = pthread_join(*(pthread_t *)data->data1, NULL);
 		if (0 != res)
 		{
 			ft_puterr("Error: pthread_join failed", 2);
@@ -88,11 +74,6 @@ int	secure_thread(t_secure *data)
 		pthread_exit(data->data1);
 	return (EXIT_SUCCESS);
 }
-
-/*
-        MUTEX
-INIT, DESTROY, LOCK , UNLOCK
-*/
 
 int	secure_mutex(t_secure *data)
 {

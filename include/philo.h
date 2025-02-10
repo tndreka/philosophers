@@ -6,25 +6,34 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/06 19:55:11 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/10 14:10:38 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h> // threads liberary 
-# include <stdio.h> // printf 
-# include <stdlib.h> // malloc & free
-# include <unistd.h> // write & sleep
+/*
+ ** ====== [INCLUDES] ======
+*/
+
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h> 
 # include <stdbool.h>
-# include <sys/time.h> // gettime
+# include <sys/time.h>
 # include <limits.h> 
 
-//Defination of the Main struct
+/*
+ ** ======= [STRUCTS] =======
+*/
+
 typedef struct s_dining	t_dining;
 
-// Struct for type of Codes that will be in this program
+/*	
+	======== [ENUM CODE STRUCT] =========
+*/
 typedef enum type_code
 {
 	MALLOC,
@@ -37,12 +46,18 @@ typedef enum type_code
 	MUTEX_UNLOCK
 }			t_code;
 
+/*
+ ** ======== [FORKS] ========
+*/
 typedef struct e_fork
 {
 	pthread_mutex_t	fork;
 	int				fork_id;
 }				t_fork;
 
+/*
+ ** ========= [PTHREAD & MUTEX WRAPPER STRUCT]
+*/
 typedef struct e_secure
 {
 	void		*data1;
@@ -50,64 +65,81 @@ typedef struct e_secure
 	void		*data3;
 	t_code		code;	
 }		t_secure;
-// Struct for the philosophers
+
+/*
+ ** ========== [INDIVIDUAL_PHILOSOPHER STRUCT] ===========
+*/
 typedef struct s_philo
 {
-	pthread_t			thread; // each philo is a thread
+	pthread_t			thread;
 	int					index;
-	int					meal_count; // how many meals has he eated
-	long					last_meal; // time passed since eating the last meal
-	bool				starving; // if he didnt eat 
+	int					meal_count;
+	long				last_meal;
+	bool				starving; 
 	bool				full;
 	t_fork				*left_fork;
 	t_fork				*right_fork;
 	t_dining			*dining;
 }	t_philo;
 
-//General Struct
+/*
+ ** ============= [GENERAL_STRUCT] ==============
+*/
 typedef struct s_dining
 {
-	int					philo_nbr; // number of philo
-	int					time_to_eat; // time to eat
-	int					time_to_die; // time to die
-	int					time_to_sleep; // time to sleep 
-	int					meal_flag;// [if the optional input is there]
-	long				start_time; // the time cap when the routine has started
-	bool				finish_routine;//when 1philo is-.-||all the philos,eated
+	int					philo_nbr;
+	int					time_to_eat;
+	int					time_to_die;
+	int					time_to_sleep;
+	int					meal_flag;
+	long				start_time;
+	bool				finish_routine;
 	t_fork				*forks;
 	t_philo				*philos;
 }	t_dining;
 
-//Argument check functions
+/*
+ ** ============== [ PROTOTYPES ] =================
+*/
+
+/*
+ **  ============ [PARSER] ==============
+*/
 int		arg_checker(int argc, char *argv[]);
 int		analyze_args(int ac, char **av);
 int		philo_checker(int argc, char *argv[]);
 
-//Initialization functions
+/*
+ **  ============= [INITIALIZATION] ================
+*/
 void	initialization_of_struct(t_dining *dining, char *argv[]);
 void	assign_data(t_dining *dining);
 int		init_forks_per_philo(t_dining *dining);
 void	create_philo(t_dining *dining);
 void	forks_assign(int i, t_philo *philo, t_fork *forks);
 
-//Utils-1 functions
+/*
+ ** ============= [UTILS] ===============
+*/
 int		ft_isdigit(char n);
 int		ft_atoi(const char *str);
 void	ft_puterr(char *s, int fd);
-
-//Utils-2
 void	*alloc_malloc(size_t byte);
 int		secure_function(t_secure *data);
 int		secure_thread(t_secure *data);
 int		secure_mutex(t_secure *data);
 
-//Utils-3
+/*
+**  ============== [TIME] =============== 
+*/
 long	time_start(void);
 
-//Start the dining routine
+
+/*
+ **  ============= [DINING_ROUTINE] ==============
+*/
 void	start_dining(t_dining *dining);
 void	philo_thread(t_dining *dining);
-
-//routine Function
 void	*dining_routine(void *arg);
+
 #endif

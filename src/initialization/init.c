@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/06 20:22:40 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/10 18:24:28 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	initialization_of_struct(t_dining *dining, char *argv[])
 		dining->meal_flag = -1;
 	else
 		dining->meal_flag = ft_atoi(argv[5]);
-	//dining->start_time = get_current_time(); // to do
 	dining->finish_routine = false;
 }
 
@@ -46,6 +45,13 @@ void	assign_data(t_dining *dining)
 	dining->philos = (t_philo *)alloc_malloc(sizeof(t_philo)
 			* dining->philo_nbr);
 	dining->forks = (t_fork *)alloc_malloc (sizeof(t_fork) * dining->philo_nbr);
+	// dining->philos = (t_philo *)malloc(sizeof(t_philo) * dining->philo_nbr);
+	// dining->forks = (t_fork *)malloc(sizeof(t_fork) * dining->philo_nbr);
+	// if(!dining->philos || !dining->forks)
+	// {
+	// 	ft_puterr("error malloc", 2);
+	// }	
+	
 }
 
 /*
@@ -74,7 +80,6 @@ int	init_forks_per_philo(t_dining *dining)
 		}
 		i++;
 	}
-	printf("Fork %d initialized\n", i);
 	return (0);
 }
 
@@ -84,7 +89,6 @@ int	init_forks_per_philo(t_dining *dining)
 */
 void	create_philo(t_dining *dining)
 {
-	printf("before philo");
 	t_philo	*philo;
 	int		i;
 
@@ -95,13 +99,12 @@ void	create_philo(t_dining *dining)
 		philo->index = i + 1;
 		philo->meal_count = 0;
 		philo->full = false;
-		philo->dining = dining; 
-		printf("Before forks_assign for philosopher %d\n", philo->index);
-		forks_assign(i, philo, dining->forks);
-		printf("Philosopher %d initialized\n", philo->index);
+		philo->dining = dining;
+		philo->left_fork = &dining->forks[i];
+		philo->left_fork = &dining->forks[(i + 1) % dining->philo_nbr];
+		// forks_assign(i, philo, dining->forks);
 		i++;
 	}
-	printf("After finishing the philo init\n");
 }
 
 /*
@@ -129,19 +132,20 @@ depending on the number of the philosphers
 i make the assingment of the left and the right fork.
 */
 
-void	forks_assign(int i, t_philo *philo, t_fork *forks)
-{
-	printf("before->forks get_assign\n");
-	if ((i) % 2)
-	{
-		philo->right_fork = &forks[(i)];
-		philo->left_fork = &forks[(philo->dining->philo_nbr + 1)];
-	}
-	else
-	{
-		philo->right_fork = &forks[(philo->dining->philo_nbr + 1)];
-		philo->left_fork = &forks[(i)];
-	}
-	printf("\n");
-	printf("after forks get assign\n");
-}
+//===function for forks===
+// void	forks_assign(int i, t_philo *philo, t_fork *forks)
+// {
+// 	// printf("before->forks get_assign\n");
+// 	if ((i) % 2)
+// 	{
+// 		philo->right_fork = &forks[(i)];
+// 		philo->left_fork = &forks[(philo->dining->philo_nbr + 1)];
+// 	}
+// 	else
+// 	{
+// 		philo->right_fork = &forks[(philo->dining->philo_nbr + 1)];
+// 		philo->left_fork = &forks[(i)];
+// 	}
+// 	// printf("\n");
+// 	// printf("after forks get assign\n");
+// }
