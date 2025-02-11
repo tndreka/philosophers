@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/11 15:49:11 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/11 18:23:23 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void philo_thread(t_dining *dining)
 
 	i = 0;
 	dining->start_time = time_start();
-	while (i < dining->philos->index)
+	while (i < dining->philo_nbr)
 	{
 		dining->philos[i].last_meal = dining->start_time;
 		i++;	
@@ -46,6 +46,14 @@ void philo_thread(t_dining *dining)
 		secure_function(&data);
 		i++;
 	}
+	i = 0;
+	while (i < dining->philo_nbr)
+	{
+		data.data1 = &dining->philos[i].thread;
+		data.code = THREAD_JOIN;
+		secure_function(&data);
+		i++;
+	}
 }
 
 void	*dining_routine(void *arg)
@@ -55,14 +63,35 @@ void	*dining_routine(void *arg)
 	philo = (t_philo *)arg;
 	while (!philo->dining->finish_routine)
 	{
+		if(philo->index % 2 == 0)
+		{
+			data.data1 = philo->right_fork;
+			data.code = MUTEX_LOCK;
+			secure_function(&data);
+			print(philo, "has taken a fork\n");
+			data.data1 = philo->left_fork;
+			data.code = MUTEX_LOCK;
+			secure_function(&data);
+			print(philo, "has taken a fork\n");
+		}
+		else
+		{
+			data.data1 = philo->right_fork;
+			data.code = MUTEX_LOCK;
+			secure_function(&data);
+			print(philo, "has taken a fork\n");
+			data.data1 = philo->left_fork;
+			data.code = MUTEX_LOCK;
+			secure_function(&data);
+			print(philo, "has taken a fork\n");
+		}
+		print(philo, "is eating\n");
 		data.data1 = philo->right_fork;
-		data.code = MUTEX_LOCK;
+		data.code = MUTEX_UNLOCK;
 		secure_function(&data);
-		print(philo, "has taken a fork");
 		data.data1 = philo->left_fork;
-		data.code = MUTEX_LOCK;
+		data.code = MUTEX_UNLOCK;
 		secure_function(&data);
-		print(philo, "has taken a fork");
 		
 	}
 	return (NULL);

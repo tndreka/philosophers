@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/11 14:30:16 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/11 18:08:31 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ void	initialization_of_struct(t_dining *dining, char *argv[])
 */
 void	assign_data(t_dining *dining)
 {
-	dining->philos = (t_philo *)alloc_malloc(sizeof(t_philo)
+	dining->philos =alloc_malloc(sizeof(t_philo)
 			* dining->philo_nbr);
-	dining->forks = (t_fork *)alloc_malloc (sizeof(t_fork) * dining->philo_nbr);
+	dining->forks = alloc_malloc (sizeof(t_fork) * dining->philo_nbr);
+	if (!dining->philos || !dining->forks)
+		exit(EXIT_FAILURE);
 	// dining->philos = (t_philo *)malloc(sizeof(t_philo) * dining->philo_nbr);
 	// dining->forks = (t_fork *)malloc(sizeof(t_fork) * dining->philo_nbr);
 	// if(!dining->philos || !dining->forks)
@@ -109,7 +111,7 @@ void	create_philo(t_dining *dining)
 		philo->full = false;
 		philo->dining = dining;
 		philo->left_fork = &dining->forks[i];
-		philo->left_fork = &dining->forks[(i + 1) % dining->philo_nbr];
+		philo->right_fork = &dining->forks[(i + 1) % dining->philo_nbr];
 		// forks_assign(i, philo, dining->forks);
 		i++;
 	}

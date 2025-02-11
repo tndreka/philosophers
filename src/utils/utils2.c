@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 15:18:32 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/10 14:11:15 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/11 18:12:05 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,6 @@ int	secure_mutex(t_secure *data)
 	int	res;
 
 	res = 0;
-	if (res != 0)
-	{
-		ft_puterr("Error in MUTEX", 2);
-		return (EXIT_FAILURE);
-	}
 	if (data->code == MUTEX_INIT)
 		res = pthread_mutex_init((pthread_mutex_t *)data->data1, NULL);
 	else if (data->code == MUTEX_DESTROY)
@@ -93,5 +88,10 @@ int	secure_mutex(t_secure *data)
 		res = pthread_mutex_lock((pthread_mutex_t *)data->data1);
 	else if (data->code == MUTEX_UNLOCK)
 		res = pthread_mutex_unlock((pthread_mutex_t *)data->data1);
+	if (res != 0)
+	{
+		ft_puterr("Error in MUTEX", 2);
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
