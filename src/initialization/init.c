@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/10 18:24:28 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/11 14:30:16 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,30 @@ void	assign_data(t_dining *dining)
 	
 }
 
+
 /*
 		On this function i initialize the mutex for forks for [N]philos
 		and if any error happens in the initialization part i destroy the mutex
 */
-int	init_forks_per_philo(t_dining *dining)
+int	init_mutex_philo(t_dining *dining)
 {
 	t_secure	data;
 	int			i;
 
 	i = 0;
+	data.data1 = &dining->write;
+	data.code = MUTEX_INIT;
+	if (secure_function(&data) != 0)
+		return(EXIT_FAILURE);
 	while (i < dining->philo_nbr)
 	{
 		data.data1 = &dining->forks[i].fork;
 		data.code = MUTEX_INIT;
 		if (secure_function(&data) != 0)
 		{
+			data.data1 = &dining->write;
+			data.code = MUTEX_DESTROY;
+			secure_function(&data);
 			while (i >= 0)
 			{
 				data.code = MUTEX_DESTROY;

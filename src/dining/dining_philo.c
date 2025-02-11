@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/10 20:03:21 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:49:11 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	start_dining(t_dining *dining)
 {
 	//here we start to count the time
-	dining->start_time = time_start();
 	//here we initilize threads per philo[i]
 	philo_thread(dining);
 	//monitoring =>to do
@@ -31,7 +30,13 @@ void philo_thread(t_dining *dining)
 	int			i;
 
 	i = 0;
-	
+	dining->start_time = time_start();
+	while (i < dining->philos->index)
+	{
+		dining->philos[i].last_meal = dining->start_time;
+		i++;	
+	}
+	i = 0;
 	while (i < dining->philo_nbr)
 	{
 		data.data1 = &dining->philos[i].thread;
@@ -40,27 +45,25 @@ void philo_thread(t_dining *dining)
 		data.code = THREAD_CREATE;
 		secure_function(&data);
 		i++;
-	}	
+	}
 }
 
 void	*dining_routine(void *arg)
 {
-	t_philo *philo;
-
+	t_philo 	*philo;
+	t_secure	data;
 	philo = (t_philo *)arg;
-	while (1)
+	while (!philo->dining->finish_routine)
 	{
-		if(philo->index % 2 == 0)
-		{
-			//here take the forks and mutex lock for left and right
-			//print the action
-		}
-		else
-		{
-			////here take the forks and mutex lock for left and right
-		}
-		// now i should have the print that the philo is eating keep a count at 
-		//last time that he eated and also ad the count on the meal eated 
+		data.data1 = philo->right_fork;
+		data.code = MUTEX_LOCK;
+		secure_function(&data);
+		print(philo, "has taken a fork");
+		data.data1 = philo->left_fork;
+		data.code = MUTEX_LOCK;
+		secure_function(&data);
+		print(philo, "has taken a fork");
+		
 	}
 	return (NULL);
 }

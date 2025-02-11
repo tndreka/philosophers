@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:37 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/10 14:11:48 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:51:10 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	}
 	initialization_of_struct(&dining, argv);
 	assign_data(&dining);
-	init_forks_per_philo(&dining);
+	init_mutex_philo(&dining);
 	create_philo(&dining);
 	start_dining(&dining);
 	return (EXIT_SUCCESS);

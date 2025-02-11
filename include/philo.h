@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/10 14:10:38 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:47:27 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_dining
 	int					meal_flag;
 	long				start_time;
 	bool				finish_routine;
+	pthread_mutex_t		write;
 	t_fork				*forks;
 	t_philo				*philos;
 }	t_dining;
@@ -114,9 +115,9 @@ int		philo_checker(int argc, char *argv[]);
 */
 void	initialization_of_struct(t_dining *dining, char *argv[]);
 void	assign_data(t_dining *dining);
-int		init_forks_per_philo(t_dining *dining);
+int		init_mutex_philo(t_dining *dining);
 void	create_philo(t_dining *dining);
-void	forks_assign(int i, t_philo *philo, t_fork *forks);
+//void	forks_assign(int i, t_philo *philo, t_fork *forks);
 
 /*
  ** ============= [UTILS] ===============
@@ -128,12 +129,12 @@ void	*alloc_malloc(size_t byte);
 int		secure_function(t_secure *data);
 int		secure_thread(t_secure *data);
 int		secure_mutex(t_secure *data);
-
+void	print(t_philo *philo, char *s);
 /*
 **  ============== [TIME] =============== 
 */
 long	time_start(void);
-
+long	current_time(void);
 
 /*
  **  ============= [DINING_ROUTINE] ==============
