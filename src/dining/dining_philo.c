@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/11 18:23:23 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/11 20:48:01 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,18 @@ void	*dining_routine(void *arg)
 			print(philo, "has taken a fork\n");
 		}
 		print(philo, "is eating\n");
+		usleep(philo->dining->time_to_eat * 1000);
+		philo->last_meal = current_time();
+		philo->meal_count++;
 		data.data1 = philo->right_fork;
 		data.code = MUTEX_UNLOCK;
 		secure_function(&data);
 		data.data1 = philo->left_fork;
 		data.code = MUTEX_UNLOCK;
 		secure_function(&data);
+		print(philo, "is sleeping\n");
+        usleep(philo->dining->time_to_sleep * 1000); 
+        print(philo, "is thinking\n");
 		
 	}
 	return (NULL);
