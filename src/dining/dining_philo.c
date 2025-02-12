@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/11 20:48:01 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/12 20:34:39 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ void	*dining_routine(void *arg)
 		}
 		else
 		{
-			data.data1 = philo->right_fork;
+			data.data1 = philo->left_fork;
 			data.code = MUTEX_LOCK;
 			secure_function(&data);
 			print(philo, "has taken a fork\n");
-			data.data1 = philo->left_fork;
+			data.data1 = philo->right_fork;
 			data.code = MUTEX_LOCK;
 			secure_function(&data);
 			print(philo, "has taken a fork\n");

@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 15:18:32 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/11 18:12:05 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/12 20:08:24 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	*alloc_malloc(size_t byte)
 
 	memory = malloc(byte);
 	if (!memory)
+	{
 		ft_puterr("Error: Malloc function", 2);
+	}
 	return (memory);
 }
 

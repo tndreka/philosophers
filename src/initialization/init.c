@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/11 20:20:53 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/12 20:40:26 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,23 @@
 /*
 		on this part I parse the arguments in to my main struct
 */
-void	initialization_of_struct(t_dining *dining, char *argv[])
+// void	initialization_of_struct(t_dining *dining, char *argv[])
+// {
+// 	dining->philo_nbr = ft_atoi(argv[1]);
+// 	dining->time_to_die = ft_atoi(argv[2]);
+// 	dining->time_to_eat = ft_atoi(argv[3]);
+// 	dining->time_to_sleep = ft_atoi(argv[4]);
+// 	if (!argv[5])
+// 		dining->meal_flag = -1;
+// 	else
+// 		dining->meal_flag = ft_atoi(argv[5]);
+// 	dining->finish_routine = false;
+// }
+
+int initialization_of_struct(t_dining *dining, char *argv[])
 {
+	if (!argv)
+		return (1);
 	dining->philo_nbr = ft_atoi(argv[1]);
 	dining->time_to_die = ft_atoi(argv[2]);
 	dining->time_to_eat = ft_atoi(argv[3]);
@@ -31,7 +46,7 @@ void	initialization_of_struct(t_dining *dining, char *argv[])
 		dining->meal_flag = -1;
 	else
 		dining->meal_flag = ft_atoi(argv[5]);
-	dining->finish_routine = false;
+	return (0);
 }
 
 /*
@@ -40,20 +55,25 @@ void	initialization_of_struct(t_dining *dining, char *argv[])
 	==> Allocated memory for [N] philosophers 
 	==> allocated memory for [N] forks per philosopher
 */
-void	assign_data(t_dining *dining)
+int	assign_data(t_dining *dining)
 {
+	if (!dining->philo_nbr)
 	dining->philos =alloc_malloc(sizeof(t_philo)
 			* dining->philo_nbr);
+	if (!dining->philos)
+	{
+		ft_puterr("Error: Alloc_malloc-> dining->philos!!",2);
+		return(1);
+	}
 	dining->forks = alloc_malloc (sizeof(t_fork) * dining->philo_nbr);
-	if (!dining->philos || !dining->forks)
-		exit(EXIT_FAILURE);
-	// dining->philos = (t_philo *)malloc(sizeof(t_philo) * dining->philo_nbr);
-	// dining->forks = (t_fork *)malloc(sizeof(t_fork) * dining->philo_nbr);
-	// if(!dining->philos || !dining->forks)
-	// {
-	// 	ft_puterr("error malloc", 2);
-	// }	
-	
+	if (!dining->forks)
+	{
+		free(dining->philos);
+		dining->philos = NULL;
+		ft_puterr("Error: Alloc_malloc-> dining->forks!!",2);
+		return(1);
+	}
+	return(0);
 }
 
 
@@ -69,6 +89,8 @@ int	init_mutex_philo(t_dining *dining)
 
 	i = 0;
 	j = 0;
+	// if (!dining->forks)
+	// 	return (1);
 	data.data1 = &dining->write;
 	data.code = MUTEX_INIT;
 	if (secure_function(&data) != 0)
@@ -100,11 +122,13 @@ int	init_mutex_philo(t_dining *dining)
 	here i am initializin the individual philospoher struct with all the 
 	nescesary data. 
 */
-void	create_philo(t_dining *dining)
+int		create_philo(t_dining *dining)
 {
 	t_philo	*philo;
 	int		i;
 
+	if (!dining || !dining->philos || !dining->forks || dining->philo_nbr <= 0)
+		return(1);
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
@@ -118,6 +142,7 @@ void	create_philo(t_dining *dining)
 		// forks_assign(i, philo, dining->forks);
 		i++;
 	}
+	return(0);
 }
 
 /*
