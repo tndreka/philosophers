@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/13 16:38:51 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:48:03 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int initialization_of_struct(t_dining *dining, char *argv[])
 */
 int	assign_data(t_dining *dining)
 {
-	if (dining->philo_nbr <= 0)
 	dining->philos =alloc_malloc(sizeof(t_philo)
 			* dining->philo_nbr);
 	if (!dining->philos)

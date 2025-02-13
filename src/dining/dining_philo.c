@@ -6,50 +6,24 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/13 16:41:05 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:30:43 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void dining_monitoring(void *arg);
+
 void	start_dining(t_dining *dining)
 {
-	//here we start to count the time
-	//here we initilize threads per philo[i]
 	philo_thread(dining);
-	//monitoring =>to do
-	//join the threads
-	//free cleanup
-	// free(dining->philos);
-	// 	free(dining->forks);	
 }
 
 void philo_thread(t_dining *dining)
 {
 	t_secure	data;
 	int			i;
-	if (!dining) {
-        printf("Error: dining is NULL\n");
-        return;
-    }
-    if (!dining->philos) {
-        printf("Error: dining->philos is NULL\n");
-        return;
-    }
-    if (dining->philo_nbr <= 0) {
-        printf("Error: Invalid philosopher count: %d\n", dining->philo_nbr);
-        return;
-    }
 
-    printf("Dining start time: %ld\n", time_start());
-
-    for (int i = 0; i < dining->philo_nbr; i++) {
-        if (&dining->philos[i] == NULL) {
-            printf("Error: Philosopher %d is NULL\n", i);
-            return;
-        }
-        printf("Philosopher %d initialized successfully\n", i);
-    }
 	i = 0;
 	dining->start_time = time_start();
 	while (i < dining->philo_nbr)
@@ -69,6 +43,16 @@ void philo_thread(t_dining *dining)
 			printf("failed on creatin the thread %d", i);
 		i++;
 	}
+	data.data1 = &dining->monitor_thread;
+	data.data2 = dining_monitoring;
+	data.data3 = dining;
+	data.code  = THREAD_CREATE;
+	if(secure_function(&data) != 0)
+		ft_puterr("MONITORING FAILD", 2);
+	data.data1 =  &dining->monitor_thread;
+	data.code = THREAD_JOIN;
+	if(secure_function(&data) != 0)
+		ft_puterr("MONITORING FAILD", 2);
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
@@ -99,11 +83,11 @@ void	*dining_routine(void *arg)
 		}
 		else
 		{
-			data.data1 = philo->right_fork;
+			data.data1 = philo->left_fork;
 			data.code = MUTEX_LOCK;
 			secure_function(&data);
 			print(philo, "has taken a fork\n");
-			data.data1 = philo->left_fork;
+			data.data1 = philo->right_fork;
 			data.code = MUTEX_LOCK;
 			secure_function(&data);
 			print(philo, "has taken a fork\n");
