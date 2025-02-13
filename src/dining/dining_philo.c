@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/12 20:34:39 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:41:05 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,28 @@ void philo_thread(t_dining *dining)
 {
 	t_secure	data;
 	int			i;
+	if (!dining) {
+        printf("Error: dining is NULL\n");
+        return;
+    }
+    if (!dining->philos) {
+        printf("Error: dining->philos is NULL\n");
+        return;
+    }
+    if (dining->philo_nbr <= 0) {
+        printf("Error: Invalid philosopher count: %d\n", dining->philo_nbr);
+        return;
+    }
 
+    printf("Dining start time: %ld\n", time_start());
+
+    for (int i = 0; i < dining->philo_nbr; i++) {
+        if (&dining->philos[i] == NULL) {
+            printf("Error: Philosopher %d is NULL\n", i);
+            return;
+        }
+        printf("Philosopher %d initialized successfully\n", i);
+    }
 	i = 0;
 	dining->start_time = time_start();
 	while (i < dining->philo_nbr)
@@ -39,11 +60,13 @@ void philo_thread(t_dining *dining)
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
+		printf("failed on creatin the thread -->addres %p", &dining->philos[i]);
 		data.data1 = &dining->philos[i].thread;
 		data.data2 = dining_routine;
 		data.data3 = &dining->philos[i];
 		data.code = THREAD_CREATE;
-		secure_function(&data);
+		if(secure_function(&data)!= 0)
+			printf("failed on creatin the thread %d", i);
 		i++;
 	}
 	i = 0;
@@ -76,11 +99,11 @@ void	*dining_routine(void *arg)
 		}
 		else
 		{
-			data.data1 = philo->left_fork;
+			data.data1 = philo->right_fork;
 			data.code = MUTEX_LOCK;
 			secure_function(&data);
 			print(philo, "has taken a fork\n");
-			data.data1 = philo->right_fork;
+			data.data1 = philo->left_fork;
 			data.code = MUTEX_LOCK;
 			secure_function(&data);
 			print(philo, "has taken a fork\n");
