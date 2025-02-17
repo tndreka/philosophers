@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/13 16:48:03 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:30:55 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	init_mutex_philo(t_dining *dining)
 	int			j;
 
 	i = 0;
-	j = 0;
 	// if (!dining->forks)
 	// 	return (1);
 	data.data1 = &dining->write;
@@ -99,6 +98,7 @@ int	init_mutex_philo(t_dining *dining)
 		data.code = MUTEX_INIT;
 		if (secure_function(&data) != 0)
 		{
+			j = 0;
 			data.data1 = &dining->write;
 			data.code = MUTEX_DESTROY;
 			secure_function(&data);
@@ -107,7 +107,7 @@ int	init_mutex_philo(t_dining *dining)
 				data.data1 = &dining->forks[i].fork;
 				data.code = MUTEX_DESTROY;
 				secure_function(&data);
-				i--;
+				j++;
 			}
 			return (EXIT_FAILURE);
 		}

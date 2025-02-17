@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/13 19:26:36 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/12 20:32:08 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef enum type_code
 */
 typedef struct e_fork
 {
-	bool			state;
 	pthread_mutex_t	fork;
 	int				fork_id;
 }				t_fork;
@@ -96,7 +95,6 @@ typedef struct s_dining
 	long				start_time;
 	bool				finish_routine;
 	pthread_mutex_t		write;
-	pthread_t			monitor_thread;
 	t_fork				*forks;
 	t_philo				*philos;
 }	t_dining;
