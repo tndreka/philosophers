@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/17 17:30:39 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:37:20 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void philo_thread(t_dining *dining)
 	int			i;
     // printf("Dining start time: %ld\n", time_start());
 
-    for (int i = 0; i < dining->philo_nbr; i++) {
-        if (&dining->philos[i] == NULL) {
-            printf("Error: Philosopher %d is NULL\n", i);
-            return;
-        }
-        printf("Philosopher %d initialized successfully\n", i);
-    }
+    // for (int i = 0; i < dining->philo_nbr; i++) {
+    //     if (&dining->philos[i] == NULL) {
+    //         printf("Error: Philosopher %d is NULL\n", i);
+    //         return;
+    //     }
+    //     printf("Philosopher %d initialized successfully\n", i);
+    // }
 	i = 0;
 	dining->start_time = time_start();
 	while (i < dining->philo_nbr)

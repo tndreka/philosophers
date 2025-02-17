@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/17 17:30:55 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:34:40 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	init_mutex_philo(t_dining *dining)
 	int			j;
 
 	i = 0;
-	// if (!dining->forks)
-	// 	return (1);
 	data.data1 = &dining->write;
 	data.code = MUTEX_INIT;
 	if (secure_function(&data) != 0)
@@ -120,13 +118,14 @@ int	init_mutex_philo(t_dining *dining)
 	here i am initializin the individual philospoher struct with all the 
 	nescesary data. 
 */
+
 int		create_philo(t_dining *dining)
 {
 	t_philo	*philo;
 	int		i;
 
-	if (!dining || !dining->philos || !dining->forks || dining->philo_nbr <= 0)
-		return(1);
+	// if (!dining || !dining->philos || !dining->forks || dining->philo_nbr <= 0)
+	// 	return(1);
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
