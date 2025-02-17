@@ -6,33 +6,37 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/17 17:34:40 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/17 20:06:23 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-/*
-				INITIALIZATION
-	On this file we are feeding the struct with all the nescesary data that 
-	we need for our program to start.
-	
-*/
 
-/*
-		on this part I parse the arguments in to my main struct
-*/
-// void	initialization_of_struct(t_dining *dining, char *argv[])
-// {
-// 	dining->philo_nbr = ft_atoi(argv[1]);
-// 	dining->time_to_die = ft_atoi(argv[2]);
-// 	dining->time_to_eat = ft_atoi(argv[3]);
-// 	dining->time_to_sleep = ft_atoi(argv[4]);
-// 	if (!argv[5])
-// 		dining->meal_flag = -1;
-// 	else
-// 		dining->meal_flag = ft_atoi(argv[5]);
-// 	dining->finish_routine = false;
-// }
+int init_dining(t_dining *dining, char *argv[])
+{
+	if (initialization_of_struct(dining, argv) != 0)
+	{
+		ft_puterr("Error: initialization_of_struct failed !!", 2);
+		return (1);
+	}
+	if (assign_data(dining) != 0)
+	{
+		ft_puterr("Error: Assign-data failed !!", 2);
+		return (1);
+	}
+	if (init_mutex_philo(dining) != 0)
+	{
+		ft_puterr("Error: init_mutex_philo failed !!", 2);
+		return (1);
+	}
+	if (create_philo(dining) != 0)
+	{
+		ft_puterr("Error: create_philo failed !!", 2);
+		return (1);
+	}
+	return (0);
+}
+
 
 int initialization_of_struct(t_dining *dining, char *argv[])
 {
@@ -49,14 +53,11 @@ int initialization_of_struct(t_dining *dining, char *argv[])
 	return (0);
 }
 
-/*
-	This functions is created to Allocate memory for the philosopher
-	and forks.
-	==> Allocated memory for [N] philosophers 
-	==> allocated memory for [N] forks per philosopher
-*/
+
 int	assign_data(t_dining *dining)
 {
+	dining->finish_routine = false;
+	dining->synch_ready = false;
 	dining->philos =alloc_malloc(sizeof(t_philo)
 			* dining->philo_nbr);
 	if (!dining->philos)
@@ -75,10 +76,6 @@ int	assign_data(t_dining *dining)
 	return(0);
 }
 
-/*
-		On this function i initialize the mutex for forks for [N]philos
-		and if any error happens in the initialization part i destroy the mutex
-*/
 int	init_mutex_philo(t_dining *dining)
 {
 	t_secure	data;
@@ -86,6 +83,10 @@ int	init_mutex_philo(t_dining *dining)
 	int			j;
 
 	i = 0;
+	data.data1 = &dining->dining_mtx;
+	data.code = MUTEX_INIT;
+	if (secure_function(&data) != 0)
+		return(EXIT_FAILURE);
 	data.data1 = &dining->write;
 	data.code = MUTEX_INIT;
 	if (secure_function(&data) != 0)
@@ -98,6 +99,9 @@ int	init_mutex_philo(t_dining *dining)
 		{
 			j = 0;
 			data.data1 = &dining->write;
+			data.code = MUTEX_DESTROY;
+			secure_function(&data);
+			data.data1 = &dining->dining_mtx;
 			data.code = MUTEX_DESTROY;
 			secure_function(&data);
 			while (j > i)
@@ -114,18 +118,12 @@ int	init_mutex_philo(t_dining *dining)
 	return (0);
 }
 
-/*
-	here i am initializin the individual philospoher struct with all the 
-	nescesary data. 
-*/
-
 int		create_philo(t_dining *dining)
 {
 	t_philo	*philo;
+	t_secure data;
 	int		i;
 
-	// if (!dining || !dining->philos || !dining->forks || dining->philo_nbr <= 0)
-	// 	return(1);
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
@@ -136,6 +134,9 @@ int		create_philo(t_dining *dining)
 		philo->dining = dining;
 		philo->left_fork = &dining->forks[i];
 		philo->right_fork = &dining->forks[(i + 1) % dining->philo_nbr];
+		data.data1 = &philo->philo_mtx;
+		data.code = MUTEX_INIT;
+		secure_function(&data);
 		// forks_assign(i, philo, dining->forks);
 		i++;
 	}

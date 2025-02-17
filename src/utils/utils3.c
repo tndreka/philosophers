@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/11 15:52:20 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/17 19:08:48 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,14 @@ void print(t_philo *philo, char *s)
 	printf("%ld %d %s", timestamp, philo->index, s);
 	data.code = MUTEX_UNLOCK;
 	secure_function(&data);
+}
+
+int	ft_usleep(size_t milliseconds)
+{
+	size_t	start;
+
+	start = current_time();
+	while ((current_time() - start) < milliseconds)
+		usleep(500);
+	return (0);
 }
