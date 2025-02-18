@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 15:37:53 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:13:18 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_dining
 	long				start_time;
 	bool				finish_routine;
 	bool				synch_ready;
-	pthread_mutex_t		dining_mtx;
+	pthread_mutex_t		meal_lock;
 	pthread_mutex_t		write;
 	t_fork				*forks;
 	t_philo				*philos;

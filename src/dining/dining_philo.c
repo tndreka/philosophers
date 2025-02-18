@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 17:05:38 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:25:25 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,9 +214,12 @@
 */
 void *philo_camera(void *arg)
 {
+	t_philo *philo;
 	t_dining *dining;
 
-	dining = (t_dining *)arg;
+
+	philo = (t_philo *)arg;
+	dining = philo[0].dining;
 	long 	timing_last_m;
 	int		i;
 
@@ -224,18 +227,18 @@ void *philo_camera(void *arg)
 	{
 		
 		i = 0;
-		while (i < dining->philo_nbr)
+		while (i < philo->dining->philo_nbr)
 		{
-			pthread_mutex_lock(&dining->dining_mtx);
+			pthread_mutex_lock(&dining->meal_lock);
 			timing_last_m =  current_time() - dining->philos[i].last_meal;
 			if( timing_last_m > dining->time_to_die)
 			{
 				print(&dining->philos[i], "died\n");
 				dining->finish_routine = true;
-				pthread_mutex_unlock(&dining->dining_mtx);
-				break;
+				pthread_mutex_unlock(&dining->meal_lock);
+				return (NULL);
 			}
-			pthread_mutex_unlock(&dining->dining_mtx);
+			pthread_mutex_unlock(&dining->meal_lock);
 			i++;
 		}
 		ft_usleep(1);
@@ -335,61 +338,85 @@ void	let_fork(t_philo *philo)
 */
 void	*dining_routine(void *arg)
 {
-	t_philo 	*philo;
-	
-	philo = (t_philo *)arg;
-	// if(philo->index % 2 == 0)
-	// 	ft_usleep(philo->dining->time_to_eat / 2);
+	t_philo  *philo = (t_philo *)arg;
+
+	while (!philo->dining->synch_ready)
+        usleep(100);
 	while (!philo->dining->finish_routine)
-	{
-		if(philo->index % 2 == 0)
-		{
-			// printf("Philosopher %d trying to lock left fork\n", philo->index);
-			pthread_mutex_lock(&philo->left_fork->fork);		
-			print(philo, "has taken a fork\n");
-			// printf("Philosopher %d trying to lock right fork\n", philo->index);
-			pthread_mutex_lock(&philo->right_fork->fork);
-			print(philo, "has taken a fork\n");
-		}
-		else
-		{
-			// usleep(1);
-			// printf("Philosopher %d trying to lock right fork\n", philo->index);
-			pthread_mutex_lock(&philo->right_fork->fork);
-			print(philo, "has taken a fork\n");
-			// printf("Philosopher %d trying to lock left fork\n", philo->index);
-			pthread_mutex_lock(&philo->left_fork->fork);		
-			print(philo, "has taken a fork\n");
-		}
-		//EAT
-		print(philo, "is eating\n");
-		ft_usleep(philo->dining->time_to_eat);
+    {
+		get_fork(philo);
+		pthread_mutex_lock(&philo->dining->meal_lock);
 		philo->last_meal = current_time();
 		philo->meal_count++;
-		if(philo->index % 2 == 0)
-		{
-			// printf("Philosopher %d unlocking right fork\n", philo->index);
-			pthread_mutex_unlock(&philo->right_fork->fork);
-			// printf("Philosopher %d unlocking left fork\n", philo->index);
-			pthread_mutex_unlock(&philo->left_fork->fork);
-
-		}
-		else
-		{
-			// printf("Philosopher %d unlocking left fork\n", philo->index);
-			pthread_mutex_unlock(&philo->left_fork->fork);
-			// printf("Philosopher %d unlocking right fork\n", philo->index);
-			pthread_mutex_unlock(&philo->right_fork->fork);
-	
-		}
-		
-		//sleep
+		pthread_mutex_unlock(&philo->dining->meal_lock);
+		print(philo, "is eating\n");
+		ft_usleep(philo->dining->time_to_eat);
+		let_fork(philo);
 		print(philo, "is sleeping\n");
-		ft_usleep(philo->dining->time_to_sleep); 
-        //usleep(philo->dining->time_to_sleep * 1000);
-        
+		ft_usleep(philo->dining->time_to_sleep);
 		print(philo, "is thinking\n");
-		
 	}
 	return (NULL);
 }
+
+
+// void	*dining_routine(void *arg)
+// {
+// 	t_philo 	*philo;
+	
+// 	philo = (t_philo *)arg;
+// 	// if(philo->index % 2 == 0)
+// 	// 	ft_usleep(philo->dining->time_to_eat / 2);
+// 	while (!philo->dining->finish_routine)
+// 	{
+// 		if(philo->index % 2 == 0)
+// 		{
+// 			// printf("Philosopher %d trying to lock left fork\n", philo->index);
+// 			pthread_mutex_lock(&philo->left_fork->fork);		
+// 			print(philo, "has taken a fork\n");
+// 			// printf("Philosopher %d trying to lock right fork\n", philo->index);
+// 			pthread_mutex_lock(&philo->right_fork->fork);
+// 			print(philo, "has taken a fork\n");
+// 		}
+// 		else
+// 		{
+// 			// usleep(1);
+// 			// printf("Philosopher %d trying to lock right fork\n", philo->index);
+// 			pthread_mutex_lock(&philo->right_fork->fork);
+// 			print(philo, "has taken a fork\n");
+// 			// printf("Philosopher %d trying to lock left fork\n", philo->index);
+// 			pthread_mutex_lock(&philo->left_fork->fork);		
+// 			print(philo, "has taken a fork\n");
+// 		}
+// 		//EAT
+// 		print(philo, "is eating\n");
+// 		ft_usleep(philo->dining->time_to_eat);
+// 		philo->last_meal = current_time();
+// 		philo->meal_count++;
+// 		if(philo->index % 2 == 0)
+// 		{
+// 			// printf("Philosopher %d unlocking right fork\n", philo->index);
+// 			pthread_mutex_unlock(&philo->right_fork->fork);
+// 			// printf("Philosopher %d unlocking left fork\n", philo->index);
+// 			pthread_mutex_unlock(&philo->left_fork->fork);
+
+// 		}
+// 		else
+// 		{
+// 			// printf("Philosopher %d unlocking left fork\n", philo->index);
+// 			pthread_mutex_unlock(&philo->left_fork->fork);
+// 			// printf("Philosopher %d unlocking right fork\n", philo->index);
+// 			pthread_mutex_unlock(&philo->right_fork->fork);
+	
+// 		}
+		
+// 		//sleep
+// 		print(philo, "is sleeping\n");
+// 		ft_usleep(philo->dining->time_to_sleep); 
+//         //usleep(philo->dining->time_to_sleep * 1000);
+        
+// 		print(philo, "is thinking\n");
+		
+// 	}
+// 	return (NULL);
+// }
