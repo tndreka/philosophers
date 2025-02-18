@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 15:18:35 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:05:38 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,13 +209,42 @@
 
 //new verssion without the wrapper
 
+/*
+================================ MONITOR =======================================
+*/
 void *philo_camera(void *arg)
 {
-	(void)arg;
-	printf("\n");
+	t_dining *dining;
+
+	dining = (t_dining *)arg;
+	long 	timing_last_m;
+	int		i;
+
+	while (1)
+	{
+		
+		i = 0;
+		while (i < dining->philo_nbr)
+		{
+			pthread_mutex_lock(&dining->dining_mtx);
+			timing_last_m =  current_time() - dining->philos[i].last_meal;
+			if( timing_last_m > dining->time_to_die)
+			{
+				print(&dining->philos[i], "died\n");
+				dining->finish_routine = true;
+				pthread_mutex_unlock(&dining->dining_mtx);
+				break;
+			}
+			pthread_mutex_unlock(&dining->dining_mtx);
+			i++;
+		}
+		ft_usleep(1);
+	}
 	return (NULL);
 }
-
+/*
+============================== DINING ==========================================
+*/
 void	start_dining(t_dining *dining)
 {
 	if (!dining->meal_flag)
@@ -228,14 +257,20 @@ void	start_dining(t_dining *dining)
 
 void	handle_one_philo(t_dining *dining)
 {
-	(void)dining;
-	printf("later \n");
+	dining->start_time = current_time();
+	print(&dining->philos[0], "has taken a fork\n");
+	ft_usleep(dining->time_to_die);
+	print(&dining->philos[0], "died\n");
 }
 
+/*
+============================ threads_create =======================================================
+*/
 void	philo_thread(t_dining *dining)
 {
 	int		i;
 
+	pthread_t			monitor;
 	dining->start_time = current_time();
 	i = 0;
 	while (i < dining->philo_nbr)
@@ -251,16 +286,20 @@ void	philo_thread(t_dining *dining)
 		i++;
 	}
 	dining->synch_ready = true;
-	if (pthread_create(&dining->monitor, NULL, philo_camera, &dining->philos) != 0)
+	if (pthread_create(&monitor, NULL, philo_camera, &dining->philos) != 0)
 		ft_puterr("failed creating the monitoring\n", 2);
-	pthread_join(dining->monitor, NULL);
+	pthread_join(monitor, NULL);
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
 		pthread_join(dining->philos[i].thread, NULL);
 		i++;
 	}
+
 }
+/*
+============================ forks ====================
+*/
 void	get_fork(t_philo *philo)
 {
 	if(philo->index % 2 == 0)
@@ -291,48 +330,18 @@ void	let_fork(t_philo *philo)
 		pthread_mutex_unlock(&philo->right_fork->fork);
 	}
 }
-
-// void	*dining_routine(void *arg)
-// {
-// 	t_philo *philo;
-
-// 	philo = (t_philo *)arg;
-	
-// 	//check if all threads start at the same time
-// 	//synch threads>> //to do
-	 
-// 	while (1)
-// 	{
-// 		// chechk full
-// 		if (philo->full)
-// 			break ;
-// 		//eating
-// 		get_fork(philo);
-// 		print(philo, "is eating\n");
-// 		philo->last_meal = current_time();
-// 		philo->meal_count++;
-// 		ft_usleep(philo->dining->time_to_eat);
-// 		let_fork(philo);
-// 		// ==> here nedd to check if we got meals_counter == to meal_flag
-// 		//sleep
-// 		print(philo, "is sleeping\n");
-// 		ft_usleep(philo->dining->time_to_sleep);
-// 		//think
-// 		print(philo, "is thinking\n");
-// 	}
-// 	return (NULL);
-// }
-
+/*
+ ==========================================================
+*/
 void	*dining_routine(void *arg)
 {
 	t_philo 	*philo;
 	
 	philo = (t_philo *)arg;
-	if(philo->index % 2 == 0)
-		ft_usleep(philo->dining->time_to_eat / 2);
+	// if(philo->index % 2 == 0)
+	// 	ft_usleep(philo->dining->time_to_eat / 2);
 	while (!philo->dining->finish_routine)
 	{
-		print(philo, "is thinking\n");
 		if(philo->index % 2 == 0)
 		{
 			// printf("Philosopher %d trying to lock left fork\n", philo->index);
@@ -344,7 +353,7 @@ void	*dining_routine(void *arg)
 		}
 		else
 		{
-			usleep(1);
+			// usleep(1);
 			// printf("Philosopher %d trying to lock right fork\n", philo->index);
 			pthread_mutex_lock(&philo->right_fork->fork);
 			print(philo, "has taken a fork\n");
@@ -379,6 +388,7 @@ void	*dining_routine(void *arg)
 		ft_usleep(philo->dining->time_to_sleep); 
         //usleep(philo->dining->time_to_sleep * 1000);
         
+		print(philo, "is thinking\n");
 		
 	}
 	return (NULL);

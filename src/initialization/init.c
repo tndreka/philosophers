@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 15:06:21 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:37:56 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ int assign_data(t_dining *dining)
 int		init_mutex_philo(t_dining *dining)
 {
 	int i;
+
 
 	if (pthread_mutex_init(&dining->dining_mtx, NULL) != 0)
 	{

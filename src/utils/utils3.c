@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 15:13:12 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:00:10 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void print(t_philo *philo, char *s)
 {
 	long		timestamp;
 
-	if (philo->dining->finish_routine)
-		return;
+	// if (philo->dining->finish_routine)
+	// 	return;
 	pthread_mutex_lock(&philo->dining->write);
 	timestamp = current_time() - philo->dining->start_time;
 	if (timestamp < 0)

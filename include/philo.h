@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 11:09:33 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:37:53 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ typedef struct s_dining
 	bool				synch_ready;
 	pthread_mutex_t		dining_mtx;
 	pthread_mutex_t		write;
-	pthread_t			monitor;
 	t_fork				*forks;
 	t_philo				*philos;
 }	t_dining;
