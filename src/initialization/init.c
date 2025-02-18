@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 09:36:30 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 09:53:23 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,72 +79,72 @@ int init_dining(t_dining *dining, char *argv[])
 // 	return(0);
 // }
 
-int	init_mutex_philo(t_dining *dining)
-{
-	t_secure	data;
-	int			i;
-	int			j;
+// int	init_mutex_philo(t_dining *dining)
+// {
+// 	t_secure	data;
+// 	int			i;
+// 	int			j;
 
-	i = 0;
-	data.data1 = &dining->dining_mtx;
-	data.code = MUTEX_INIT;
-	if (secure_function(&data) != 0)
-		return(EXIT_FAILURE);
-	data.data1 = &dining->write;
-	data.code = MUTEX_INIT;
-	if (secure_function(&data) != 0)
-		return(EXIT_FAILURE);
-	while (i < dining->philo_nbr)
-	{
-		data.data1 = &dining->forks[i].fork;
-		data.code = MUTEX_INIT;
-		if (secure_function(&data) != 0)
-		{
-			j = 0;
-			data.data1 = &dining->write;
-			data.code = MUTEX_DESTROY;
-			secure_function(&data);
-			data.data1 = &dining->dining_mtx;
-			data.code = MUTEX_DESTROY;
-			secure_function(&data);
-			while (j > i)
-			{
-				data.data1 = &dining->forks[i].fork;
-				data.code = MUTEX_DESTROY;
-				secure_function(&data);
-				j++;
-			}
-			return (EXIT_FAILURE);
-		}
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	data.data1 = &dining->dining_mtx;
+// 	data.code = MUTEX_INIT;
+// 	if (secure_function(&data) != 0)
+// 		return(EXIT_FAILURE);
+// 	data.data1 = &dining->write;
+// 	data.code = MUTEX_INIT;
+// 	if (secure_function(&data) != 0)
+// 		return(EXIT_FAILURE);
+// 	while (i < dining->philo_nbr)
+// 	{
+// 		data.data1 = &dining->forks[i].fork;
+// 		data.code = MUTEX_INIT;
+// 		if (secure_function(&data) != 0)
+// 		{
+// 			j = 0;
+// 			data.data1 = &dining->write;
+// 			data.code = MUTEX_DESTROY;
+// 			secure_function(&data);
+// 			data.data1 = &dining->dining_mtx;
+// 			data.code = MUTEX_DESTROY;
+// 			secure_function(&data);
+// 			while (j > i)
+// 			{
+// 				data.data1 = &dining->forks[i].fork;
+// 				data.code = MUTEX_DESTROY;
+// 				secure_function(&data);
+// 				j++;
+// 			}
+// 			return (EXIT_FAILURE);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
-int		create_philo(t_dining *dining)
-{
-	t_philo	*philo;
-	t_secure data;
-	int		i;
+// int		create_philo(t_dining *dining)
+// {
+// 	t_philo	*philo;
+// 	t_secure data;
+// 	int		i;
 
-	i = 0;
-	while (i < dining->philo_nbr)
-	{
-		philo = dining->philos + i;
-		philo->index = i + 1;
-		philo->meal_count = 0;
-		philo->full = false;
-		philo->dining = dining;
-		philo->left_fork = &dining->forks[i];
-		philo->right_fork = &dining->forks[(i + 1) % dining->philo_nbr];
-		data.data1 = &philo->philo_mtx;
-		data.code = MUTEX_INIT;
-		secure_function(&data);
-		// forks_assign(i, philo, dining->forks);
-		i++;
-	}
-	return(0);
-}
+// 	i = 0;
+// 	while (i < dining->philo_nbr)
+// 	{
+// 		philo = dining->philos + i;
+// 		philo->index = i + 1;
+// 		philo->meal_count = 0;
+// 		philo->full = false;
+// 		philo->dining = dining;
+// 		philo->left_fork = &dining->forks[i];
+// 		philo->right_fork = &dining->forks[(i + 1) % dining->philo_nbr];
+// 		data.data1 = &philo->philo_mtx;
+// 		data.code = MUTEX_INIT;
+// 		secure_function(&data);
+// 		// forks_assign(i, philo, dining->forks);
+// 		i++;
+// 	}
+// 	return(0);
+// }
 
 /*
 	in this function i will link each fork to the philosopher.
@@ -228,4 +228,42 @@ int assign_data(t_dining *dining)
 		ft_puterr("Malloc for dining->forks failed\n", 2);
 		return (1);	
 	}
+	return (0);
+}
+
+int		init_mutex_philo(t_dining *dining)
+{
+	int i;
+
+	pthread_mutex_init(&dining->dining_mtx, NULL);
+	pthread_mutex_init(&dining->write, NULL);
+	i = 0;
+	while (i < dining->philo_nbr)
+	{
+		pthread_mutex_init(&dining->forks[i].fork, NULL);
+		//here if mutex are not initalize -->destroy
+		i++;
+	}
+	return (0);
+}
+
+int		create_philo(t_dining *dining)
+{
+	t_philo		*philo;
+	int			i;
+
+	i = 0;
+	while (i < dining->philo_nbr)
+	{
+		philo = dining->philos + i;
+		philo->dining = dining; // dining struct;
+		philo->index = i + 1; //index per philo
+		philo->full = false;
+		philo->meal_count = 0; // 0 meals eaten
+		philo->left_fork = &dining->forks[i];
+		philo->right_fork = &dining->forks[(i + 1) % dining->philo_nbr];
+		pthread_mutex_init(&philo->philo_mtx, NULL);
+		i++;
+	}
+	return (0);
 }

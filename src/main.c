@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:37 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 09:23:37 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 09:41:44 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@
 	new version without wrapper functions 
 */
 
+void cleanup(t_dining *dining)
+{
+	free(dining->philos);
+	free(dining->forks);
+}
+
 int main(int ac, char *av[])
 {
 	t_dining	dining;
@@ -41,5 +47,6 @@ int main(int ac, char *av[])
 		return(EXIT_FAILURE);
 	if (init_dining(&dining, av) != 0)
 		return(EXIT_FAILURE);
-	
+	cleanup(&dining);
+	return(EXIT_SUCCESS);
 }
