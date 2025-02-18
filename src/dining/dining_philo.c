@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/17 20:16:48 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 10:07:37 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,3 +201,53 @@ void	*dining_routine(void *arg)
 // 	}
 // 	return (NULL);
 // }
+
+
+/*
+================================================================================
+*/
+
+//new verssion without the wrapper
+
+void philo_camera(void *arg);
+
+void	start_dining(t_dining *dining)
+{
+	if (!dining->meal_flag)
+		return;
+	else if (dining->philo_nbr == 1)
+	 	handle_one_philo(dining);
+	else
+		philo_thread(dining);
+}
+
+void	handle_one_philo(t_dining *dining)
+{
+	printf("later \n", 2);
+}
+
+void	philo_thread(t_dining *dining)
+{
+	int		i;
+
+	dining->start_time = time_start();
+	i = 0;
+	while (i < dining->philo_nbr)
+	{
+		dining->philos[i].last_meal = dining->start_time;
+		i++;
+	}
+	i = 0;
+	while (i < dining->philo_nbr)
+	{
+		pthread_create(&dining->philos[i].thread, NULL, dining_routine, &dining->philos[i]);
+		i++;
+	}
+	pthread_create(&dining->monitor, NULL, philo_camera, &dining->philos);
+	pthread_join(&dining->monitor, NULL);
+	while (i < dining->philo_nbr)
+	{
+		pthread_join(&dining->philos[i].thread, NULL);
+		i++;
+	}
+}
