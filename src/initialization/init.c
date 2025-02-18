@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/17 20:06:23 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 09:36:30 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,44 +37,47 @@ int init_dining(t_dining *dining, char *argv[])
 	return (0);
 }
 
+/*
+================================================================================
+*/
 
-int initialization_of_struct(t_dining *dining, char *argv[])
-{
-	if (!argv)
-		return (1);
-	dining->philo_nbr = ft_atoi(argv[1]);
-	dining->time_to_die = ft_atoi(argv[2]);
-	dining->time_to_eat = ft_atoi(argv[3]);
-	dining->time_to_sleep = ft_atoi(argv[4]);
-	if (!argv[5])
-		dining->meal_flag = -1;
-	else
-		dining->meal_flag = ft_atoi(argv[5]);
-	return (0);
-}
+// int initialization_of_struct(t_dining *dining, char *argv[])
+// {
+// 	if (!argv)
+// 		return (1);
+// 	dining->philo_nbr = ft_atoi(argv[1]);
+// 	dining->time_to_die = ft_atoi(argv[2]);
+// 	dining->time_to_eat = ft_atoi(argv[3]);
+// 	dining->time_to_sleep = ft_atoi(argv[4]);
+// 	if (!argv[5])
+// 		dining->meal_flag = -1;
+// 	else
+// 		dining->meal_flag = ft_atoi(argv[5]);
+// 	return (0);
+// }
 
 
-int	assign_data(t_dining *dining)
-{
-	dining->finish_routine = false;
-	dining->synch_ready = false;
-	dining->philos =alloc_malloc(sizeof(t_philo)
-			* dining->philo_nbr);
-	if (!dining->philos)
-	{
-		ft_puterr("Error: Alloc_malloc-> dining->philos!!",2);
-		return(1);
-	}
-	dining->forks = alloc_malloc (sizeof(t_fork) * dining->philo_nbr);
-	if (!dining->forks)
-	{
-		free(dining->philos);
-		dining->philos = NULL;
-		ft_puterr("Error: Alloc_malloc-> dining->forks!!",2);
-		return(1);
-	}
-	return(0);
-}
+// int	assign_data(t_dining *dining)
+// {
+// 	dining->finish_routine = false;
+// 	dining->synch_ready = false;
+// 	dining->philos =alloc_malloc(sizeof(t_philo)
+// 			* dining->philo_nbr);
+// 	if (!dining->philos)
+// 	{
+// 		ft_puterr("Error: Alloc_malloc-> dining->philos!!",2);
+// 		return(1);
+// 	}
+// 	dining->forks = alloc_malloc (sizeof(t_fork) * dining->philo_nbr);
+// 	if (!dining->forks)
+// 	{
+// 		free(dining->philos);
+// 		dining->philos = NULL;
+// 		ft_puterr("Error: Alloc_malloc-> dining->forks!!",2);
+// 		return(1);
+// 	}
+// 	return(0);
+// }
 
 int	init_mutex_philo(t_dining *dining)
 {
@@ -185,3 +188,44 @@ i make the assingment of the left and the right fork.
 // 	// printf("\n");
 // 	// printf("after forks get assign\n");
 // }
+
+/*
+================================================================================
+*/
+
+//without wrapper functions
+
+int		initialization_of_struct(t_dining *dining, char *av[])
+{
+	if (!av)
+		return (1);
+	dining->philo_nbr = ft_atoi(av[1]);
+	dining->time_to_die =  ft_atoi(av[2]);
+	dining->time_to_eat =  ft_atoi(av[3]);
+	dining->time_to_sleep =  ft_atoi(av[4]);
+	if (!av[5])
+		dining->meal_flag = -1;
+	else 
+		dining->meal_flag =  ft_atoi(av[5]);
+	return (0);	
+}
+
+int assign_data(t_dining *dining)
+{
+	dining->finish_routine = false;
+	dining->synch_ready = false;
+	dining->philos = malloc(sizeof(t_philo) * dining->philo_nbr);
+	if (dining->philos == NULL)
+	{
+		ft_puterr("Malloc for dining->philos failed\n", 2);
+		return (1);
+	}
+	dining->forks = malloc(sizeof(t_fork) * dining->philo_nbr);
+	if (dining->forks == NULL)
+	{
+		free(dining->philos);
+		dining->philos = NULL;
+		ft_puterr("Malloc for dining->forks failed\n", 2);
+		return (1);	
+	}
+}
