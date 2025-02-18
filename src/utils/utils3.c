@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 17:00:10 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:59:57 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,17 @@ void print(t_philo *philo, char *s)
 {
 	long		timestamp;
 
-	// if (philo->dining->finish_routine)
-	// 	return;
 	pthread_mutex_lock(&philo->dining->write);
+	if (philo->dining->finish_routine)
+	{
+		pthread_mutex_unlock(&philo->dining->write);
+		return;
+	}
 	timestamp = current_time() - philo->dining->start_time;
-	if (timestamp < 0)
-		ft_puterr("err===> negative TIMEE", 2);
-	else 
-		printf("%ld %d %s", timestamp, philo->index, s);
+	// if (timestamp < 0)
+	// 	ft_puterr("err===> negative TIMEE", 2);
+	// else 
+	printf("%ld %d %s", timestamp, philo->index, s);
 	pthread_mutex_unlock(&philo->dining->write);
 }
 
@@ -45,6 +48,6 @@ int	ft_usleep(size_t milliseconds)
 
 	start = current_time();
 	while ((current_time() - start) < milliseconds)
-		usleep(500);
+		usleep(milliseconds / 10);
 	return (0);
 }

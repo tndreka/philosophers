@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 17:13:18 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:14:03 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int		ft_usleep(size_t milliseconds);
 /*
 **  ============== [TIME] =============== 
 */
-long	time_start(void);
+
 long	current_time(void);
 
 /*
