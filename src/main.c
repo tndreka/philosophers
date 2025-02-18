@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:37 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/17 19:21:27 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 09:15:11 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,3 +29,6 @@ int	main(int argc, char **argv)
 	start_dining(&dining);
 	return (EXIT_SUCCESS);
 }
+/*
+	new version without wrapper functions 
+*/
