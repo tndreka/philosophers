@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:37 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 09:41:44 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 11:10:12 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int main(int ac, char *av[])
 		return(EXIT_FAILURE);
 	if (init_dining(&dining, av) != 0)
 		return(EXIT_FAILURE);
+	start_dining(&dining);
 	cleanup(&dining);
 	return(EXIT_SUCCESS);
 }

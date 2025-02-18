@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 09:53:23 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:06:21 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,12 +235,24 @@ int		init_mutex_philo(t_dining *dining)
 {
 	int i;
 
-	pthread_mutex_init(&dining->dining_mtx, NULL);
-	pthread_mutex_init(&dining->write, NULL);
+	if (pthread_mutex_init(&dining->dining_mtx, NULL) != 0)
+	{
+		ft_puterr("dining_mtx failed", 2);
+		return (1);
+	}
+	if (pthread_mutex_init(&dining->write, NULL) != 0)
+	{
+		ft_puterr("dining_mtx failed", 2);
+		return (1);
+	}
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
-		pthread_mutex_init(&dining->forks[i].fork, NULL);
+		if (pthread_mutex_init(&dining->forks[i].fork, NULL) != 0)
+		{
+			ft_puterr("dining_mtx failed", 2);
+			break ;
+		}
 		//here if mutex are not initalize -->destroy
 		i++;
 	}
@@ -262,7 +274,10 @@ int		create_philo(t_dining *dining)
 		philo->meal_count = 0; // 0 meals eaten
 		philo->left_fork = &dining->forks[i];
 		philo->right_fork = &dining->forks[(i + 1) % dining->philo_nbr];
-		pthread_mutex_init(&philo->philo_mtx, NULL);
+		if (pthread_mutex_init(&philo->philo_mtx, NULL) != 0)
+		{
+			ft_puterr("Error philo_mtx failed", 2);
+		}
 		i++;
 	}
 	return (0);

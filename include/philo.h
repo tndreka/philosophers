@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/17 19:48:34 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/18 11:09:33 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,11 @@ long	current_time(void);
  **  ============= [DINING_ROUTINE] ==============
 */
 void	start_dining(t_dining *dining);
+void	handle_one_philo(t_dining *dining);
 void	philo_thread(t_dining *dining);
 void	*dining_routine(void *arg);
+void	get_fork(t_philo *philo);
+void	let_fork(t_philo *philo);
+void	*philo_camera(void *arg);
 
 #endif
