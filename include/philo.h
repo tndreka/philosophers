@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 18:14:03 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:13:23 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,12 @@ typedef struct s_dining
 	int					time_to_sleep;
 	int					meal_flag;
 	long				start_time;
+	bool				dead;
 	bool				finish_routine;
 	bool				synch_ready;
 	pthread_mutex_t		meal_lock;
 	pthread_mutex_t		write;
+	pthread_mutex_t		dead_lock;
 	t_fork				*forks;
 	t_philo				*philos;
 }	t_dining;
@@ -135,6 +137,7 @@ int		secure_thread(t_secure *data);
 int		secure_mutex(t_secure *data);
 void	print(t_philo *philo, char *s);
 int		ft_usleep(size_t milliseconds);
+int		death_check(t_dining *dining);
 /*
 **  ============== [TIME] =============== 
 */

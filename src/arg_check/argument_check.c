@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:31:18 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 09:18:30 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:31:54 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	analyze_args(int ac, char **av)
 		j = 0;
 		while (av[i][j])
 		{
-			if (ft_isdigit(av[i][j]) != 0)
+			if (!ft_isdigit(av[i][j]))
 				return (1);
 			j++;
 		}

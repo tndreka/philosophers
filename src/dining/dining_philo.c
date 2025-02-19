@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 19:00:54 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:15:40 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,20 +369,16 @@ void	*dining_routine(void *arg)
 	{
 		if(philo->index % 2 == 0)
 		{
-			// printf("Philosopher %d trying to lock left fork\n", philo->index);
 			pthread_mutex_lock(&philo->left_fork->fork);		
 			print(philo, "has taken a fork\n");
-			// printf("Philosopher %d trying to lock right fork\n", philo->index);
 			pthread_mutex_lock(&philo->right_fork->fork);
 			print(philo, "has taken a fork\n");
 		}
 		else
 		{
-			// usleep(1);
-			// printf("Philosopher %d trying to lock right fork\n", philo->index);
+		
 			pthread_mutex_lock(&philo->right_fork->fork);
 			print(philo, "has taken a fork\n");
-			// printf("Philosopher %d trying to lock left fork\n", philo->index);
 			pthread_mutex_lock(&philo->left_fork->fork);		
 			print(philo, "has taken a fork\n");
 		}
@@ -393,28 +389,19 @@ void	*dining_routine(void *arg)
 		philo->meal_count++;
 		if(philo->index % 2 == 0)
 		{
-			// printf("Philosopher %d unlocking right fork\n", philo->index);
 			pthread_mutex_unlock(&philo->right_fork->fork);
-			// printf("Philosopher %d unlocking left fork\n", philo->index);
 			pthread_mutex_unlock(&philo->left_fork->fork);
 
 		}
 		else
 		{
-			// printf("Philosopher %d unlocking left fork\n", philo->index);
 			pthread_mutex_unlock(&philo->left_fork->fork);
-			// printf("Philosopher %d unlocking right fork\n", philo->index);
 			pthread_mutex_unlock(&philo->right_fork->fork);
-	
 		}
 		
-		//sleep
 		print(philo, "is sleeping\n");
-		ft_usleep(philo->dining->time_to_sleep); 
-        //usleep(philo->dining->time_to_sleep * 1000);
-        
+		ft_usleep(philo->dining->time_to_sleep);         
 		print(philo, "is thinking\n");
-		
 	}
 	return (NULL);
 }

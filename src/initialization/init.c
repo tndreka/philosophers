@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 17:17:05 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:21:00 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ int assign_data(t_dining *dining)
 {
 	dining->finish_routine = false;
 	dining->synch_ready = false;
+	dining->dead = false;
 	dining->philos = malloc(sizeof(t_philo) * dining->philo_nbr);
 	if (dining->philos == NULL)
 	{
@@ -235,7 +236,12 @@ int		init_mutex_philo(t_dining *dining)
 {
 	int i;
 
-
+	
+	if (pthread_mutex_init(&dining->dead_lock, NULL) != 0)
+	{
+		ft_puterr("dining_mtx failed", 2);
+		return (1);
+	}
 	if (pthread_mutex_init(&dining->meal_lock, NULL) != 0)
 	{
 		ft_puterr("dining_mtx failed", 2);
@@ -254,7 +260,6 @@ int		init_mutex_philo(t_dining *dining)
 			ft_puterr("dining_mtx failed", 2);
 			break ;
 		}
-		//here if mutex are not initalize -->destroy
 		i++;
 	}
 	return (0);

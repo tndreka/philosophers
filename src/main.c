@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:37 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/19 10:43:56 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:41:37 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,21 @@ void cleanup(t_dining *dining)
 	free(dining->forks);
 }
 
+void ft_exit(t_dining *dining)
+{
+	int		i;
+
+	i = 0;
+	while (i < dining->philo_nbr)
+	{
+		pthread_mutex_destroy(&dining->forks[i].fork);
+		i++;
+	}
+	pthread_mutex_destroy(&dining->write);
+	pthread_mutex_destroy(&dining->meal_lock);
+	cleanup(dining);
+}
+
 int main(int ac, char *av[])
 {
 	t_dining	dining;
@@ -48,7 +63,7 @@ int main(int ac, char *av[])
 	if (init_dining(&dining, av) != 0)
 		return(EXIT_FAILURE);
 	start_dining(&dining);
-	cleanup(&dining);
+	ft_exit(&dining);
 	return(EXIT_SUCCESS);
 }
 
