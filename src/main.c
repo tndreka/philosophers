@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:37 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/18 11:10:12 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/19 10:43:56 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,15 @@ int main(int ac, char *av[])
 	cleanup(&dining);
 	return(EXIT_SUCCESS);
 }
+
+/*
+====== TEST CASES ======
+- 1) 1 800 200 200 ->philo should not eat , and should die. √
+- 2) 5 800 200 200 -> No philo should die. √
+- 3) 5 800 200 200 7 -> the dining will end after the philos eat 7 times --> X || to do || 
+- 4) 4 410 200 200 -> No philo should die. √
+- 5) 4 310 200 200 -> 1 philo should die. √
+- 6) test with 2 philo < 10ms --> X 
+- 7) test < 200 --> X 
+======================= to check -> sync for eat, sleep , think
+*/
