@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
+/*   By: tndreka <tndreka@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:31:18 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/19 18:31:54 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/19 21:49:07 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,9 @@
 int	arg_checker(int argc, char *argv[])
 {
 	if (argc == 5 || argc == 6)
-	{
-		philo_checker(argc, argv);
-		return (0);
-	}
+		return (philo_checker(argc, argv));
 	else
-	{
-		ft_puterr("Error: Invalid number of arguments\n", 2);
-		return (1);
-	}
+		return (ft_puterr("Error: Invalid number of arguments\n", 2) ,1);
 }
 
 int	philo_checker(int argc, char *argv[])
@@ -63,7 +57,7 @@ int	analyze_args(int ac, char **av)
 		j = 0;
 		while (av[i][j])
 		{
-			if (!ft_isdigit(av[i][j]))
+			if (ft_isdigit(av[i][j]) != 0)
 				return (1);
 			j++;
 		}
