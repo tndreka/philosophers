@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 12:55:34 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 13:39:34 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void *philo_camera(void *arg)
 	t_dining *dining;
 	long 	timing_last_m;
 	int		i;
+	int		full;
 	
 	dining = (t_dining *)arg;
 
@@ -41,7 +42,30 @@ void *philo_camera(void *arg)
 			pthread_mutex_unlock(&dining->meal_lock);
 			i++;
 		}
-		ft_usleep(1);
+		if (dining->meal_flag != -1)
+		{
+			full = 1;
+			i =0;
+			while (i < dining->philo_nbr)
+			{
+				pthread_mutex_lock(&dining->meal_lock);
+				if(dining->philos[i].meal_count < dining->meal_flag)
+					full = 1;
+				pthread_mutex_lock(&dining->meal_lock);
+				if (!full)
+					break;
+				i++;
+			}
+			if (full)
+			{
+				pthread_mutex_lock(&dining->dead_lock);
+				dining->finish_routine = true;
+				pthread_mutex_unlock(&dining->dead_lock);
+				return(NULL);
+			}
+			
+		}
+		ft_usleep(1000);
 	}
 	return (NULL);
 }
@@ -140,6 +164,7 @@ void	*dining_routine(void *arg)
 
 	while (1)
 	{
+		print(philo, "is thinking\n");
 		pthread_mutex_lock(&philo->dining->dead_lock);
 		if(philo->dining->finish_routine)
 		{
@@ -159,7 +184,6 @@ void	*dining_routine(void *arg)
 		print(philo, "is sleeping\n");
 		ft_usleep(philo->dining->time_to_sleep);
 		
-		print(philo, "is thinking\n");
 	}
 	return (NULL);
 }

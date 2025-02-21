@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 12:44:39 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 13:34:29 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ int	ft_usleep(size_t milliseconds)
 
 	start = current_time();
 	while ((current_time() - start) < milliseconds)
-		usleep(milliseconds / 10);
+		usleep(500);
 	return (0);
 }
