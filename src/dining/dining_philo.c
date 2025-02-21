@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 20:10:55 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 20:21:32 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,14 @@ void	philo_thread(t_dining *dining)
 		pthread_join(dining->philos[i].thread, NULL);
 		i++;
 	}
+	i = 0;
+	while (i < dining->philo_nbr)
+	{
+		printf("Philosopher %d ate %d times\n", 
+			dining->philos[i].index + 1, 
+			dining->philos[i].meal_count);
+		i++;
+	}
 
 }
 
@@ -142,6 +150,7 @@ void	get_fork(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->right_fork->fork);
 		print(philo, "has taken a fork\n");
+		ft_usleep(1);
 		pthread_mutex_lock(&philo->left_fork->fork);
 		print(philo, "has taken a fork\n");
 	}
@@ -149,13 +158,14 @@ void	get_fork(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->left_fork->fork);
 		print(philo, "has taken a fork\n");
+		ft_usleep(1);
 		pthread_mutex_lock(&philo->right_fork->fork);
 		print(philo, "has taken a fork\n");
 	}
-		pthread_mutex_lock(&philo->dining->meal_lock);
-		philo->last_meal = current_time();
-		// philo->meal_count++;
-		pthread_mutex_unlock(&philo->dining->meal_lock);
+		// pthread_mutex_lock(&philo->dining->meal_lock);
+		// philo->last_meal = current_time();
+		// // philo->meal_count++;
+		// pthread_mutex_unlock(&philo->dining->meal_lock);
 }
 
 void	let_fork(t_philo *philo)
