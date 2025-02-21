@@ -6,11 +6,12 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 10:57:15 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:57:53 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 
 /*
 ================================ MONITOR =======================================
@@ -204,8 +205,8 @@ void	*dining_routine(void *arg)
 		
 		print(philo, "is sleeping\n");
 		ft_usleep(philo->dining->time_to_sleep);    
-		printf("is thinking\n");     
-		// print(philo, "is thinking\n");
+		// printf("is thinking\n");     
+		print(philo, "is thinking\n");
 	}
 	return (NULL);
 }

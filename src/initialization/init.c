@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 10:43:12 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:55:18 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ int init_dining(t_dining *dining, char *argv[])
 	}
 	return (0);
 }
+
+/*
+================================================================================
+*/
+
 
 int		initialization_of_struct(t_dining *dining, char *av[])
 {

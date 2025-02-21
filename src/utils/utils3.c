@@ -6,12 +6,12 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 10:44:14 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:56:00 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
+//
 long	current_time(void)
 {
 	struct timeval time;
