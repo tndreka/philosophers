@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/19 17:19:23 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:44:14 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void print(t_philo *philo, char *s)
 		return;
 	}
 	timestamp = current_time() - philo->dining->start_time;
-	// if(!philo->dining->dead)
 	printf("%ld %d %s", timestamp, philo->index, s);
 	pthread_mutex_unlock(&philo->dining->write);
 }
