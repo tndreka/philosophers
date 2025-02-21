@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 20:06:58 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 20:10:55 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void *philo_camera(void *arg)
 			{
 				print(&dining->philos[i], "died\n");
 				dining->finish_routine = true;
-				pthread_mutex_unlock(&dining->meal_lock);
+				//pthread_mutex_unlock(&dining->meal_lock);
 				return (NULL);
 			}
 			if (dining->meal_flag != -1 && dining->philos[i].meal_count >= dining->meal_flag)
