@@ -6,12 +6,12 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 15:18:32 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/12 20:08:24 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:51:11 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
+//
 void	*alloc_malloc(size_t byte)
 {
 	void	*memory;

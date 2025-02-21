@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/19 17:13:23 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:50:38 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PHILO_H
 
 /*
- ** ====== [INCLUDES] ======
+ ** ====== [INCLUDES] =======
 */
 
 # include <pthread.h>

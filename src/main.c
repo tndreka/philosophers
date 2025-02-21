@@ -6,32 +6,12 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:37 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/19 12:41:37 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:51:21 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// int	main(int argc, char **argv)
-// {
-// 	t_dining	dining;
-
-// 	if (arg_checker(argc, argv) != 0)
-// 	{
-// 		ft_puterr("Error:Put the correct arguments for the philo program\n", 2);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	if (init_dining(&dining, argv) != 0)
-// 	{
-// 		ft_puterr("Error: Inintialization of dining_philo FAILED!!!", 2);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	start_dining(&dining);
-// 	return (EXIT_SUCCESS);
-// }
-/*
-	new version without wrapper functions 
-*/
 
 void cleanup(t_dining *dining)
 {

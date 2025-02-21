@@ -6,12 +6,13 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 01:36:49 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/19 17:16:51 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:51:06 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+//
 int	ft_isdigit(char n)
 {
 	if (n >= '0' && n <= '9')
