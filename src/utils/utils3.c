@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 11:56:00 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/21 12:44:39 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,16 @@ void print(t_philo *philo, char *s)
 {
 	long		timestamp;
 
-	pthread_mutex_lock(&philo->dining->write);
+	//pthread_mutex_lock(&philo->dining->write);
+	pthread_mutex_lock(&philo->dining->dead_lock);
 	if (philo->dining->finish_routine)
 	{
-		pthread_mutex_unlock(&philo->dining->write);
+		pthread_mutex_unlock(&philo->dining->dead_lock);
+		// pthread_mutex_unlock(&philo->dining->write);
 		return;
 	}
+	pthread_mutex_unlock(&philo->dining->dead_lock);
+	pthread_mutex_lock(&philo->dining->write);
 	timestamp = current_time() - philo->dining->start_time;
 	printf("%ld %d %s", timestamp, philo->index, s);
 	pthread_mutex_unlock(&philo->dining->write);
