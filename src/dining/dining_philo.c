@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 20:21:32 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/22 09:31:48 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ void *philo_camera(void *arg)
 			pthread_mutex_unlock(&dining->dead_lock);
 			return (NULL);
 		}
+		usleep(500);
+	}
+	return (NULL);
+}
+//==================================
 		// if (dining->meal_flag != -1)
 		// {
 		// 	full = 1;
@@ -75,10 +80,7 @@ void *philo_camera(void *arg)
 		// 	}
 			
 		// }
-		ft_usleep(1000);
-	}
-	return (NULL);
-}
+		// ft_usleep(500);
 /*
 ============================== DINING ==========================================
 */
