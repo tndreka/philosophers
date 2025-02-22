@@ -6,13 +6,13 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:28:01 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 11:55:18 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:48:38 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int init_dining(t_dining *dining, char *argv[])
+int	init_dining(t_dining *dining, char *argv[])
 {
 	if (initialization_of_struct(dining, argv) != 0)
 	{
@@ -37,27 +37,22 @@ int init_dining(t_dining *dining, char *argv[])
 	return (0);
 }
 
-/*
-================================================================================
-*/
-
-
-int		initialization_of_struct(t_dining *dining, char *av[])
+int	initialization_of_struct(t_dining *dining, char *av[])
 {
 	if (!av)
 		return (1);
 	dining->philo_nbr = ft_atoi(av[1]);
-	dining->time_to_die =  ft_atoi(av[2]);
-	dining->time_to_eat =  ft_atoi(av[3]);
-	dining->time_to_sleep =  ft_atoi(av[4]);
+	dining->time_to_die = ft_atoi(av[2]);
+	dining->time_to_eat = ft_atoi(av[3]);
+	dining->time_to_sleep = ft_atoi(av[4]);
 	if (!av[5])
 		dining->meal_flag = -1;
-	else 
-		dining->meal_flag =  ft_atoi(av[5]);
-	return (0);	
+	else
+		dining->meal_flag = ft_atoi(av[5]);
+	return (0);
 }
 
-int assign_data(t_dining *dining)
+int	assign_data(t_dining *dining)
 {
 	dining->finish_routine = false;
 	dining->synch_ready = false;
@@ -74,16 +69,15 @@ int assign_data(t_dining *dining)
 		free(dining->philos);
 		dining->philos = NULL;
 		ft_puterr("Malloc for dining->forks failed\n", 2);
-		return (1);	
+		return (1);
 	}
 	return (0);
 }
 
-int		init_mutex_philo(t_dining *dining)
+int	init_mutex_philo(t_dining *dining)
 {
-	int i;
+	int	i;
 
-	
 	if (pthread_mutex_init(&dining->dead_lock, NULL) != 0)
 	{
 		ft_puterr("dining_mtx failed", 2);
@@ -112,7 +106,7 @@ int		init_mutex_philo(t_dining *dining)
 	return (0);
 }
 
-int		create_philo(t_dining *dining)
+int	create_philo(t_dining *dining)
 {
 	t_philo		*philo;
 	int			i;
@@ -121,10 +115,10 @@ int		create_philo(t_dining *dining)
 	while (i < dining->philo_nbr)
 	{
 		philo = dining->philos + i;
-		philo->dining = dining; // dining struct;
-		philo->index = i + 1; //index per philo
+		philo->dining = dining;
+		philo->index = i + 1;
 		philo->full = false;
-		philo->meal_count = 0; // 0 meals eaten
+		philo->meal_count = 0;
 		philo->left_fork = &dining->forks[i];
 		philo->right_fork = &dining->forks[(i + 1) % dining->philo_nbr];
 		if (pthread_mutex_init(&philo->philo_mtx, NULL) != 0)

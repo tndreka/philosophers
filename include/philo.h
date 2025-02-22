@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 11:50:38 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:52:36 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ typedef struct s_philo
 	int					index;
 	int					meal_count;
 	long				last_meal;
-	bool				starving; 
+	bool				starving;
 	bool				full;
-	pthread_mutex_t 	philo_mtx;
+	pthread_mutex_t		philo_mtx;
 	t_fork				*left_fork;
 	t_fork				*right_fork;
 	t_dining			*dining;

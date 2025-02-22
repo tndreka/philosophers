@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/22 09:31:48 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:52:16 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@
 /*
 ================================ MONITOR =======================================
 */
-void *philo_camera(void *arg)
+void	*philo_camera(void *arg)
 {
-	t_dining *dining;
-	long 	timing_last_m;
-	int		i;
-	int		full;
-	
-	dining = (t_dining *)arg;
+	t_dining	*dining;
+	long		timing_last_m;
+	int			i;
+	int			full;
 
+	dining = (t_dining *)arg;
 	while (1)
 	{
 		full = 0;
@@ -32,64 +31,36 @@ void *philo_camera(void *arg)
 		while (i < dining->philo_nbr)
 		{
 			pthread_mutex_lock(&dining->meal_lock);
-			timing_last_m =  current_time() - dining->philos[i].last_meal;
+			timing_last_m = current_time() - dining->philos[i].last_meal;
 			pthread_mutex_unlock(&dining->meal_lock);
-			if( timing_last_m > dining->time_to_die)
+			if (timing_last_m > dining->time_to_die)
 			{
 				print(&dining->philos[i], "died\n");
 				dining->finish_routine = true;
-				//pthread_mutex_unlock(&dining->meal_lock);
 				return (NULL);
 			}
 			if (dining->meal_flag != -1 && dining->philos[i].meal_count >= dining->meal_flag)
 				full++;
-				
-			pthread_mutex_unlock(&dining->meal_lock);
 			i++;
 		}
 		if (full == dining->philo_nbr)
 		{
 			pthread_mutex_lock(&dining->dead_lock);
-			dining->finish_routine = true;	
+			dining->finish_routine = true;
 			pthread_mutex_unlock(&dining->dead_lock);
 			return (NULL);
 		}
-		usleep(500);
+		usleep(1000);
 	}
 	return (NULL);
 }
-//==================================
-		// if (dining->meal_flag != -1)
-		// {
-		// 	full = 1;
-		// 	i =0;
-		// 	while (i < dining->philo_nbr)
-		// 	{
-		// 		pthread_mutex_lock(&dining->meal_lock);
-		// 		if(dining->philos[i].meal_count < dining->meal_flag)
-		// 			full = 0;
-		// 		pthread_mutex_unlock(&dining->meal_lock);
-		// 		i++;
-		// 	}
-		// 	if (full)
-		// 	{
-		// 		pthread_mutex_lock(&dining->dead_lock);
-		// 		dining->finish_routine = true;
-		// 		pthread_mutex_unlock(&dining->dead_lock);
-		// 		return(NULL);
-		// 	}
-			
-		// }
-		// ft_usleep(500);
-/*
-============================== DINING ==========================================
-*/
+
 void	start_dining(t_dining *dining)
 {
 	if (!dining->meal_flag)
-		return;
+		return ;
 	else if (dining->philo_nbr == 1)
-	 	handle_one_philo(dining);
+		handle_one_philo(dining);
 	else
 		philo_thread(dining);
 }
@@ -102,14 +73,11 @@ void	handle_one_philo(t_dining *dining)
 	print(&dining->philos[0], "died\n");
 }
 
-/*
-============================ threads_create =======================================================
-*/
 void	philo_thread(t_dining *dining)
 {
-	int		i;
+	int				i;
+	pthread_t		monitor;
 
-	pthread_t			monitor;
 	dining->start_time = current_time();
 	i = 0;
 	while (i < dining->philo_nbr)
@@ -121,7 +89,7 @@ void	philo_thread(t_dining *dining)
 	while (i < dining->philo_nbr)
 	{
 		if (pthread_create(&dining->philos[i].thread, NULL, dining_routine, &dining->philos[i]) != 0)
-			ft_puterr("failed creating the threads\n",2);
+			ft_puterr("failed creating the threads\n", 2);
 		i++;
 	}
 	dining->synch_ready = true;
@@ -137,18 +105,16 @@ void	philo_thread(t_dining *dining)
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
-		printf("Philosopher %d ate %d times\n", 
-			dining->philos[i].index + 1, 
+		printf("Philosopher %d ate %d times\n",
+			dining->philos[i].index + 1,
 			dining->philos[i].meal_count);
 		i++;
 	}
-
 }
-
 
 void	get_fork(t_philo *philo)
 {
-	if(philo->index % 2 == 0)
+	if (philo->index % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->right_fork->fork);
 		print(philo, "has taken a fork\n");
@@ -164,15 +130,11 @@ void	get_fork(t_philo *philo)
 		pthread_mutex_lock(&philo->right_fork->fork);
 		print(philo, "has taken a fork\n");
 	}
-		// pthread_mutex_lock(&philo->dining->meal_lock);
-		// philo->last_meal = current_time();
-		// // philo->meal_count++;
-		// pthread_mutex_unlock(&philo->dining->meal_lock);
 }
 
 void	let_fork(t_philo *philo)
 {
-	if(philo->index % 2 == 0)
+	if (philo->index % 2 == 0)
 	{
 		pthread_mutex_unlock(&philo->right_fork->fork);
 		pthread_mutex_unlock(&philo->left_fork->fork);
@@ -186,20 +148,20 @@ void	let_fork(t_philo *philo)
 
 void	*dining_routine(void *arg)
 {
-	t_philo  *philo = (t_philo *)arg;
+	t_philo	*philo;
 
+	philo = (t_philo *)arg;
 	while (1)
 	{
 		pthread_mutex_lock(&philo->dining->dead_lock);
-		if(philo->dining->finish_routine)
+		if (philo->dining->finish_routine)
 		{
 			pthread_mutex_unlock(&philo->dining->dead_lock);
-			return(NULL);
+			return (NULL);
 		}
 		pthread_mutex_unlock(&philo->dining->dead_lock);
 		print(philo, "is thinking\n");
 		get_fork(philo);
-		//MEAL COUNT
 		pthread_mutex_lock(&philo->dining->meal_lock);
 		philo->last_meal = current_time();
 		philo->meal_count++;
@@ -207,27 +169,15 @@ void	*dining_routine(void *arg)
 		print(philo, "is eating\n");
 		ft_usleep(philo->dining->time_to_eat);
 		let_fork(philo);
-		//CHECK IF I HAVE A MEAL LIMIT
 		pthread_mutex_lock(&philo->dining->meal_lock);
 		if (philo->meal_count >= philo->dining->meal_flag && philo->dining->meal_flag != -1)
 		{
 			pthread_mutex_unlock(&philo->dining->meal_lock);
-			return(NULL);
+			return (NULL);
 		}
 		pthread_mutex_unlock(&philo->dining->meal_lock);
 		print(philo, "is sleeping\n");
 		ft_usleep(philo->dining->time_to_sleep);
-		
 	}
 	return (NULL);
 }
-
-
-/*
-
-
-1   2   3   4  5
-+   +   +   +  +
-+   +   +   +  +
-               +
-*/

@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 01:36:49 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/21 11:56:08 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:42:17 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,3 @@ void	ft_puterr(char *s, int fd)
 		i++;
 	}
 }
-
-// int death_check(t_dining *dining)
-// {
-// 	int res;
-
-// 	pthread_mutex_lock(&dining->dead_lock);
-// 	res = dining->dead;
-// 	pthread_mutex_unlock(&dining->dead_lock);
-// 	return (res);
-// }
