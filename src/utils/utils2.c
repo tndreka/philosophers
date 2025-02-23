@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/22 10:46:53 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/23 16:40:49 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print(t_philo *philo, char *s)
 	pthread_mutex_unlock(&philo->dining->dead_lock);
 	pthread_mutex_lock(&philo->dining->write);
 	timestamp = current_time() - philo->dining->start_time;
-	printf("%ld %d %s", timestamp, philo->index, s);
+	printf("%ld %d %s\n", timestamp, philo->index, s);
 	pthread_mutex_unlock(&philo->dining->write);
 }
 
@@ -47,6 +47,6 @@ int	ft_usleep(size_t milliseconds)
 
 	start = current_time();
 	while ((current_time() - start) < milliseconds)
-		usleep(100);
+		usleep(500);
 	return (0);
 }

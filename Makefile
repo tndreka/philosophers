@@ -7,8 +7,11 @@ CFLAGS = -Wall -Wextra -Werror -pthread -g -Iinclude
 SRCS = src/main.c \
 	   src/arg_check/argument_check.c \
 	   src/initialization/init.c \
+	   src/initialization/init2.c \
 	   src/utils/utils.c \
 	   src/utils/utils2.c \
+	   src/dining/eat.c \
+	   src/dining/monitor.c \
 	   src/dining/dining_philo.c
 
 OBJS = $(SRCS:.c=.o)
