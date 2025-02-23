@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 16:15:28 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/23 19:19:31 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	philo_thread(t_dining *dining)
 		i++;
 	}
 	i = 0;
-	if (dining->philos->index % 2 == 0)
-		usleep(200);
 	while (i < dining->philo_nbr)
 	{
 		if (pthread_create(&dining->philos[i].thread, NULL, dining_routine,
@@ -76,6 +74,8 @@ void	*dining_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->index % 2 == 0)
+		usleep(100);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->dining->dead_lock);
