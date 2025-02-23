@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:07:14 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 17:43:05 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/23 18:30:36 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	*philo_camera(void *arg)
 	while (1)
 	{
 		check_philo_dead(dining);
+		meal_flag(dining);
 		usleep(200);
 	}
 	return (NULL);
@@ -89,6 +90,38 @@ void	check_philo_dead(t_dining *dining)
 			}
 			pthread_mutex_unlock(&dining->dead_lock);
 			pthread_mutex_unlock(&dining->meal_lock);
+			return ;
+		}
+		pthread_mutex_unlock(&dining->meal_lock);
+	}
+}
+
+void	meal_flag(t_dining *dining)
+{
+	int		i;
+	int		all_eat;
+
+	if (dining->meal_flag != -1)
+	{
+		all_eat = 1;
+		pthread_mutex_lock(&dining->meal_lock);
+		i = -1;
+		while (++i < dining->philo_nbr)
+		{
+			if (dining->philos[i].meal_count < dining->meal_flag)
+			{
+				all_eat = 0;
+				break ;
+			}
+		}
+		if (all_eat)
+		{
+			pthread_mutex_lock(&dining->dead_lock);
+			dining->finish_routine = true;
+			pthread_mutex_unlock(&dining->dead_lock);
+			// i = -1;
+			// while (++i < dining->philo_nbr)
+			// 	printf("Philosopher %d ate %d times\n", dining->philos[i].index, dining->philos[i].meal_count);
 			return ;
 		}
 		pthread_mutex_unlock(&dining->meal_lock);

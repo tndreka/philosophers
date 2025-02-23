@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 17:36:07 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/23 18:23:39 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ void	*philo_camera(void *arg);
 
 void	eat( t_philo *philo);
 void	check_philo_dead(t_dining *dining);
+void	meal_flag(t_dining *dining);
 
 #endif
