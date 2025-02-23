@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 20:03:34 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/23 21:02:49 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		ft_isdigit(char n);
 int		ft_atoi(const char *str);
 void	ft_puterr(char *s, int fd);
 void	print(t_philo *philo, char *s);
-int		ft_usleep(size_t milliseconds);
+int		ft_usleep(size_t milliseconds, t_dining *t_dining);
 
 /*
 **  ============== [TIME] =============== 

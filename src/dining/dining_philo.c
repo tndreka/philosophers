@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 19:19:31 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/23 21:29:53 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_one_philo(t_dining *dining)
 {
 	dining->start_time = current_time();
 	print(&dining->philos[0], "has taken a fork");
-	ft_usleep(dining->time_to_die);
+	ft_usleep(dining->time_to_die, dining);
 	print(&dining->philos[0], "died");
 }
 
@@ -67,6 +67,8 @@ void	philo_thread(t_dining *dining)
 			dining->philos[i].meal_count);
 		i++;
 	}
+	if (dining->meal_flag != -1)
+        printf("All philosophers ate %d times. Simulation complete.\n", dining->meal_flag);
 }
 
 void	*dining_routine(void *arg)
@@ -78,17 +80,24 @@ void	*dining_routine(void *arg)
 		usleep(100);
 	while (1)
 	{
+		// pthread_mutex_lock(&philo->dining->dead_lock);
+		// if (philo->dining->finish_routine || philo->full)
+		// {
+		// 	pthread_mutex_unlock(&philo->dining->dead_lock);
+		// 	return (NULL);
+		// }
+		// pthread_mutex_unlock(&philo->dining->dead_lock);
+		print(philo, "is thinking");
+		eat(philo);
 		pthread_mutex_lock(&philo->dining->dead_lock);
-		if (philo->dining->finish_routine)
+		if (philo->dining->finish_routine || philo->full)
 		{
 			pthread_mutex_unlock(&philo->dining->dead_lock);
 			return (NULL);
 		}
 		pthread_mutex_unlock(&philo->dining->dead_lock);
-		print(philo, "is thinking");
-		eat(philo);
 		print(philo, "is sleeping");
-		ft_usleep(philo->dining->time_to_sleep);
+		ft_usleep(philo->dining->time_to_sleep, philo->dining);
 	}
 	return (NULL);
 }
