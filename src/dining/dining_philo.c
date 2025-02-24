@@ -6,11 +6,19 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/24 15:15:25 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:29:30 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+	// i = 0;
+	// while (i < dining->philo_nbr)
+	// {
+	// 	printf("Philosopher %d ate %d times\n",
+	// 		dining->philos[i].index,
+	// 		dining->philos[i].meal_count);
+	// 	i++;
+	// }
 
 void	start_dining(t_dining *dining)
 {
@@ -36,12 +44,9 @@ void	philo_thread(t_dining *dining)
 	pthread_t		monitor;
 
 	dining->start_time = current_time();
-	i = 0;
-	while (i < dining->philo_nbr)
-	{
+	i = -1;
+	while (++i < dining->philo_nbr)
 		dining->philos[i].last_meal = dining->start_time;
-		i++;
-	}
 	i = 0;
 	while (i < dining->philo_nbr)
 	{
@@ -59,16 +64,6 @@ void	philo_thread(t_dining *dining)
 		pthread_join(dining->philos[i].thread, NULL);
 		i++;
 	}
-	i = 0;
-	while (i < dining->philo_nbr)
-	{
-		printf("Philosopher %d ate %d times\n",
-			dining->philos[i].index,
-			dining->philos[i].meal_count);
-		i++;
-	}
-	if (dining->meal_flag != -1)
-        printf("All philosophers ate %d times. Simulation complete.\n", dining->meal_flag);
 }
 
 void	*dining_routine(void *arg)

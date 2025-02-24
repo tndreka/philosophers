@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:49:08 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 21:12:02 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:31:20 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	ft_usleep(size_t milliseconds, t_dining *dining)
 			return (1);
 		}
 		pthread_mutex_unlock(&dining->dead_lock);
-		
 	}
 	return (0);
 }

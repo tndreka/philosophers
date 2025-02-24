@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:05:00 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/24 17:16:06 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:33:49 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,10 @@ void	eat( t_philo *philo)
 	pthread_mutex_unlock(&philo->dining->meal_lock);
 	print(philo, "is eating");
 	ft_usleep(philo->dining->time_to_eat, philo->dining);
-	// printf("\n");
-	// printf("[DEBUG] Philo %d starts eating at %ld ms\n",
-    //    philo->index, philo->last_meal);
-	// printf("\n");
 	pthread_mutex_lock(&philo->dining->meal_lock);
 	philo->meal_count++;
-	if (philo->meal_count >= philo->dining->meal_flag && philo->dining->meal_flag != -1)
+	if (philo->meal_count >= philo->dining->meal_flag
+		&& philo->dining->meal_flag != -1)
 		philo->full = true;
 	pthread_mutex_unlock(&philo->dining->meal_lock);
 	pthread_mutex_lock(&philo->dining->dead_lock);
@@ -78,9 +75,4 @@ void	eat( t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->dining->dead_lock);
 	let_fork(philo);
-	// printf("\n");
-	// printf("[DEBUG] Philo %d meal count updated to %d at %ld ms\n",
-    //    philo->index, philo->meal_count, current_time());
-	// printf("\n");
-
 }

@@ -6,13 +6,11 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:31:18 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 15:51:17 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:27:47 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-//
 
 int	arg_checker(int argc, char *argv[])
 {
