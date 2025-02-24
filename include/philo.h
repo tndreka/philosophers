@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:58:55 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 21:02:49 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/24 17:06:52 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_dining	t_dining;
 typedef struct e_fork
 {
 	pthread_mutex_t	fork;
-	int				fork_id;
 }				t_fork;
 
 /*
@@ -66,6 +65,7 @@ typedef struct s_dining
 	int					meal_flag;
 	long				start_time;
 	bool				finish_routine;
+	bool				stopped_by_quota;
 	pthread_mutex_t		meal_lock;
 	pthread_mutex_t		write;
 	pthread_mutex_t		dead_lock;

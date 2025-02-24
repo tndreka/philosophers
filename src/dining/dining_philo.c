@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/23 21:29:53 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:15:25 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ void	*dining_routine(void *arg)
 		usleep(100);
 	while (1)
 	{
-		// pthread_mutex_lock(&philo->dining->dead_lock);
-		// if (philo->dining->finish_routine || philo->full)
-		// {
-		// 	pthread_mutex_unlock(&philo->dining->dead_lock);
-		// 	return (NULL);
-		// }
-		// pthread_mutex_unlock(&philo->dining->dead_lock);
 		print(philo, "is thinking");
+		pthread_mutex_lock(&philo->dining->dead_lock);
+		if (philo->dining->finish_routine || philo->full)
+		{
+			pthread_mutex_unlock(&philo->dining->dead_lock);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&philo->dining->dead_lock);
 		eat(philo);
 		pthread_mutex_lock(&philo->dining->dead_lock);
 		if (philo->dining->finish_routine || philo->full)
