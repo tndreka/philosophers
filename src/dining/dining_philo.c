@@ -6,7 +6,7 @@
 /*   By: tndreka < tndreka@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:02 by tndreka           #+#    #+#             */
-/*   Updated: 2025/02/24 18:29:30 by tndreka          ###   ########.fr       */
+/*   Updated: 2025/02/24 19:16:11 by tndreka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,23 @@ void	*dining_routine(void *arg)
 	while (1)
 	{
 		print(philo, "is thinking");
-		pthread_mutex_lock(&philo->dining->dead_lock);
-		if (philo->dining->finish_routine || philo->full)
-		{
-			pthread_mutex_unlock(&philo->dining->dead_lock);
+		if (terminate_dining(philo))
 			return (NULL);
-		}
-		pthread_mutex_unlock(&philo->dining->dead_lock);
 		eat(philo);
-		pthread_mutex_lock(&philo->dining->dead_lock);
-		if (philo->dining->finish_routine || philo->full)
-		{
-			pthread_mutex_unlock(&philo->dining->dead_lock);
+		if (terminate_dining(philo))
 			return (NULL);
-		}
-		pthread_mutex_unlock(&philo->dining->dead_lock);
 		print(philo, "is sleeping");
 		ft_usleep(philo->dining->time_to_sleep, philo->dining);
 	}
 	return (NULL);
+}
+
+bool	terminate_dining(t_philo *philo)
+{
+	bool	should_stop;
+
+	pthread_mutex_lock(&philo->dining->dead_lock);
+	should_stop = philo->dining->finish_routine || philo->full;
+	pthread_mutex_unlock(&philo->dining->dead_lock);
+	return (should_stop);
 }
